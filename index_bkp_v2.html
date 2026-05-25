@@ -15,7 +15,7 @@
     .catalog-header { position:sticky; top:0; z-index:10; background:rgba(15,17,23,.96); border-bottom:1px solid var(--line); padding:18px 20px; backdrop-filter: blur(8px); }
     .catalog-header h1 { margin:0 0 6px; font-size:24px; }
     .catalog-header p { margin:0 0 14px; color:var(--muted); }
-    .controls { display:grid; grid-template-columns: minmax(220px, 1fr) 190px 190px 160px; gap:10px; max-width:1280px; }
+    .controls { display:grid; grid-template-columns: minmax(220px, 1fr) 220px 160px; gap:10px; max-width:1200px; }
     .controls input,.controls select,.controls button { padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:#11141c; color:var(--text); }
     .controls button { cursor:pointer; }
     .stats { margin-top:10px; color:var(--muted); font-size:14px; }
@@ -79,12 +79,11 @@
 <h1> Catálogo -- Manga // Manhwa // Novela Ligera -- </h1>
 <p></p>
 <div class="controls">
-<input id="searchBox" placeholder="Buscar por nombre, género, autor, hashtag..." type="search"/>
-<select id="typeFilter"><option value="">Todos los tipos</option></select>
-<select id="statusFilter"><option value="">Todos los estados</option></select>
-<button id="resetBtn" type="button">Limpiar filtros</button>
+<input id="searchBox" oninput="filterCatalog()" placeholder="Buscar por nombre, género, autor, hashtag..." type="search"/>
+<select id="typeFilter" onchange="filterCatalog()"><option value="">Todos los tipos</option><option value="manga">Manga (111)</option><option value="manhua">Manhua (17)</option><option value="manhwa">Manhwa (85)</option><option value="pornhwa">Pornhwa (24)</option><option value="sin tipo">Sin tipo (40)</option></select>
+<button onclick="resetFilters()">Limpiar filtros</button>
 </div>
-<div class="stats"><span id="visibleCount">0</span> de <span id="totalCount">0</span> entradas visibles en catálogo principal. <span id="validationCount">0</span> cuadro(s) separado(s) por validar.</div><div class="quick-links" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><a href="#catalogGrid" style="color:var(--accent); font-size:14px;">Ver catálogo principal</a><a href="#porValidar" style="color:var(--accent); font-size:14px;">Ver cuadros por validar</a></div>
+<div class="stats"><span id="visibleCount">274</span> de <span id="totalCount">274</span> entradas visibles en catálogo principal. 3 cuadro(s) separado(s) por validar.</div><div class="quick-links" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><a href="#catalogGrid" style="color:var(--accent); font-size:14px;">Ver catálogo principal</a><a href="#porValidar" style="color:var(--accent); font-size:14px;">Ver cuadros por validar</a></div>
 </header>
 <main class="catalog-grid" id="catalogGrid">
 
@@ -3520,177 +3519,42 @@
 <div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>¿Te gustaría invitarnos un café?</h2>
-<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Por validar</span></div>
-<p class="validation-note">Cuadro administrativo separado para revisión.</p>
-<details>
-<summary>Ver información relacionada</summary>
-<div class="original-info">Elemento pendiente por validar. Revisa si corresponde eliminarlo del catálogo público.</div>
-</details>
-</div>
-</article>
-</div></section>
+<script>
+    function normalizeText(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+    function filterCatalog() {
+      const q = normalizeText(document.getElementById('searchBox').value);
+      const t = document.getElementById('typeFilter').value;
+      let count = 0;
+      document.querySelectorAll('#catalogGrid .catalog-card').forEach(card => {
+        const text = normalizeText(card.innerText);
+        const type = card.dataset.type || '';
+        const okText = !q || text.includes(q);
+        const okType = !t || type === t;
+        const show = okText && okType;
+        card.style.display = show ? '' : 'none';
+        if (show) count++;
+      });
+      document.getElementById('visibleCount').textContent = count;
+    }
+    function resetFilters() {
+      document.getElementById('searchBox').value = '';
+      document.getElementById('typeFilter').value = '';
+      filterCatalog();
+    }
+  </script>
 
 <script>
   /*
-    Catalogo dinamico.
-    - Los filtros Tipo y Estado se construyen leyendo las tarjetas existentes.
-    - Los conteos se recalculan segun la busqueda y filtros activos.
-    - El texto "Solicitar descarga" se convierte en boton de WhatsApp.
-
-    Cambia WHATSAPP_NUMBER si necesitas usar otro numero.
-    Formato: codigo de pais + numero, sin +, espacios ni guiones.
+    Configuracion del boton de WhatsApp.
+    Reemplaza el valor por tu numero con codigo de pais, sin +, espacios ni guiones.
+    Ejemplo Mexico: 525512345678
+    Ejemplo Guatemala: 50212345678
   */
   const WHATSAPP_NUMBER = "525586006883";
-
-  function normalizeText(value) {
-    return (value || "")
-      .toString()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .trim();
-  }
 
   function getCardText(card, selector) {
     const element = card.querySelector(selector);
     return element ? element.textContent.trim().replace(/\s+/g, " ") : "";
-  }
-
-  function getCardType(card) {
-    return normalizeText(card.dataset.type || getCardText(card, ".chip.type") || "sin tipo");
-  }
-
-  function getCardStatus(card) {
-    return normalizeText(card.dataset.status || getCardText(card, ".chip.status") || "sin estado");
-  }
-
-  function getLabel(value) {
-    if (!value) return "Sin dato";
-    return value
-      .split(" ")
-      .map(part => part ? part.charAt(0).toUpperCase() + part.slice(1) : part)
-      .join(" ");
-  }
-
-  function getMainCards() {
-    return Array.from(document.querySelectorAll("#catalogGrid > .catalog-card"));
-  }
-
-  function getValidationCards() {
-    return Array.from(document.querySelectorAll("#porValidar .catalog-card"));
-  }
-
-  function matchesSearch(card, query) {
-    if (!query) return true;
-    const searchableText = normalizeText([
-      card.dataset.name,
-      card.dataset.type,
-      card.dataset.status,
-      card.innerText
-    ].join(" "));
-    return searchableText.includes(query);
-  }
-
-  function matchesFilter(card, selectedType, selectedStatus) {
-    const cardType = getCardType(card);
-    const cardStatus = getCardStatus(card);
-    const okType = !selectedType || cardType === selectedType;
-    const okStatus = !selectedStatus || cardStatus === selectedStatus;
-    return okType && okStatus;
-  }
-
-  function updateSelectOptions(select, valuesMap, selectedValue, allLabel) {
-    const sortedEntries = Array.from(valuesMap.entries())
-      .sort((a, b) => a[0].localeCompare(b[0], "es"));
-
-    select.innerHTML = "";
-
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = allLabel;
-    select.appendChild(defaultOption);
-
-    sortedEntries.forEach(([value, count]) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = `${getLabel(value)} (${count})`;
-      select.appendChild(option);
-    });
-
-    if (selectedValue && valuesMap.has(selectedValue)) {
-      select.value = selectedValue;
-    } else {
-      select.value = "";
-    }
-  }
-
-  function rebuildDynamicFilters() {
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    if (!searchBox || !typeFilter || !statusFilter) return;
-
-    const query = normalizeText(searchBox.value);
-    const selectedType = typeFilter.value;
-    const selectedStatus = statusFilter.value;
-    const cards = getMainCards();
-
-    const typeCounts = new Map();
-    const statusCounts = new Map();
-
-    cards.forEach(card => {
-      if (matchesSearch(card, query) && (!selectedStatus || getCardStatus(card) === selectedStatus)) {
-        const type = getCardType(card);
-        typeCounts.set(type, (typeCounts.get(type) || 0) + 1);
-      }
-
-      if (matchesSearch(card, query) && (!selectedType || getCardType(card) === selectedType)) {
-        const status = getCardStatus(card);
-        statusCounts.set(status, (statusCounts.get(status) || 0) + 1);
-      }
-    });
-
-    updateSelectOptions(typeFilter, typeCounts, selectedType, "Todos los tipos");
-    updateSelectOptions(statusFilter, statusCounts, selectedStatus, "Todos los estados");
-  }
-
-  function filterCatalog() {
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    const visibleCount = document.getElementById("visibleCount");
-    const totalCount = document.getElementById("totalCount");
-    const validationCount = document.getElementById("validationCount");
-    if (!searchBox || !typeFilter || !statusFilter) return;
-
-    rebuildDynamicFilters();
-
-    const query = normalizeText(searchBox.value);
-    const selectedType = typeFilter.value;
-    const selectedStatus = statusFilter.value;
-    const cards = getMainCards();
-    let count = 0;
-
-    cards.forEach(card => {
-      const show = matchesSearch(card, query) && matchesFilter(card, selectedType, selectedStatus);
-      card.style.display = show ? "" : "none";
-      if (show) count++;
-    });
-
-    if (visibleCount) visibleCount.textContent = count;
-    if (totalCount) totalCount.textContent = cards.length;
-    if (validationCount) validationCount.textContent = getValidationCards().length;
-  }
-
-  function resetFilters() {
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    if (searchBox) searchBox.value = "";
-    if (typeFilter) typeFilter.value = "";
-    if (statusFilter) statusFilter.value = "";
-    filterCatalog();
   }
 
   function buildWhatsappMessage(card) {
@@ -3710,7 +3574,7 @@
   function initWhatsappRequestButtons() {
     document.querySelectorAll(".catalog-card").forEach(card => {
       const currentButton = card.querySelector(".item-num");
-      if (!currentButton) return;
+      if (!currentButton || currentButton.classList.contains("request-link-ready")) return;
 
       const link = document.createElement("a");
       link.className = "request-link request-link-ready";
@@ -3735,26 +3599,8 @@
     });
   }
 
-  function initCatalog() {
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    const resetBtn = document.getElementById("resetBtn");
-
-    if (searchBox) searchBox.addEventListener("input", filterCatalog);
-    if (typeFilter) typeFilter.addEventListener("change", filterCatalog);
-    if (statusFilter) statusFilter.addEventListener("change", filterCatalog);
-    if (resetBtn) resetBtn.addEventListener("click", resetFilters);
-
-    initWhatsappRequestButtons();
-    filterCatalog();
-  }
-
-  document.addEventListener("DOMContentLoaded", initCatalog);
-  window.addEventListener("load", function () {
-    initWhatsappRequestButtons();
-    filterCatalog();
-  });
+  document.addEventListener("DOMContentLoaded", initWhatsappRequestButtons);
+  window.addEventListener("load", initWhatsappRequestButtons);
 </script>
 
 </body>
