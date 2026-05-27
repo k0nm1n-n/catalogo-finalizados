@@ -15,7 +15,7 @@
     .catalog-header { position:sticky; top:0; z-index:10; background:rgba(15,17,23,.96); border-bottom:1px solid var(--line); padding:18px 20px; backdrop-filter: blur(8px); }
     .catalog-header h1 { margin:0 0 6px; font-size:24px; }
     .catalog-header p { margin:0 0 14px; color:var(--muted); }
-    .controls { display:grid; grid-template-columns: minmax(240px, 1fr) 170px 170px 210px 170px 150px; gap:10px; max-width:1600px; }
+    .controls { display:grid; grid-template-columns: minmax(220px, 1fr) 220px 160px; gap:10px; max-width:1200px; }
     .controls input,.controls select,.controls button { padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:#11141c; color:var(--text); }
     .controls button { cursor:pointer; }
     .stats { margin-top:10px; color:var(--muted); font-size:14px; }
@@ -50,81 +50,23 @@
     .validation-card { border-color:#54452d; background:#1c1a16; }
     .validation-card .chip { background:#3a2d1f; }
     .validation-note { color:#f4d49a; font-size:12px; margin-top:4px; }
-
-
-
-    .adult-toggle {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:10px;
-      border:1px solid var(--line);
-      background:#11141c;
-      color:var(--text);
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .adult-toggle input {
-      width:16px;
-      height:16px;
-      accent-color:var(--accent);
-    }
-
-    .request-link {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      padding:7px 11px;
-      border-radius:999px;
-      background:#ffc2e8;
-      color:#07111f !important;
-      font-size:12px;
-      font-weight:800;
-      text-decoration:none;
-      line-height:1;
-      white-space:nowrap;
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow:0 6px 18px rgba(37,211,102,.18);
-    }
-    .request-link:hover { filter:brightness(1.08); transform:translateY(-1px); }
-    .request-link:active { transform:translateY(0); }
-    .request-link::before { content:"📲"; }
 </style>
 </head>
 <body onload="if (typeof CheckLocation === 'function') CheckLocation();">
 <header class="catalog-header">
-<h1> Catálogo -- Manga // Manhwa // Novela Ligera -- </h1>
+<h1> Catálogo -- Manga / Manhwa / Novela Ligera -- </h1>
 <p></p>
 <div class="controls">
-<input id="searchBox" placeholder="Buscar por nombre, género, autor, hashtag..." type="search"/>
-<select id="typeFilter"><option value="">Todos los tipos</option></select>
-<select id="statusFilter"><option value="">Todos los estados</option></select>
-<select id="sortFilter" title="Ordenar catálogo">
-<option value="name-asc">Ordenar: A-Z</option>
-<option value="name-desc">Ordenar: Z-A</option>
-<option value="type-asc">Ordenar: Tipo</option>
-<option value="status-asc">Ordenar: Estado</option>
-<option value="chapters-desc">Ordenar: Más capítulos</option>
-<option value="chapters-asc">Ordenar: Menos capítulos</option>
-<option value="original">Orden original</option>
-</select>
-<label class="adult-toggle" title="Mostrar u ocultar contenido clasificado como Pornhwa">
-<input id="showAdultToggle" type="checkbox"/>
-<span>Mostrar +18</span>
-</label>
-<button id="resetBtn" type="button">Limpiar filtros</button>
+<input id="searchBox" oninput="filterCatalog()" placeholder="Buscar por nombre, género, autor, hashtag..." type="search"/>
+<select id="typeFilter" onchange="filterCatalog()"><option value="">Todos los tipos</option><option value="manga">Manga (111)</option><option value="manhua">Manhua (17)</option><option value="manhwa">Manhwa (85)</option><option value="pornhwa">Pornhwa (24)</option><option value="sin tipo">Sin tipo (40)</option></select>
+<button onclick="resetFilters()">Limpiar filtros</button>
 </div>
-<div class="stats"><span id="visibleCount">0</span> de <span id="totalCount">0</span> entradas visibles en catálogo principal. <span id="validationCount">0</span> cuadro(s) separado(s) por validar. <span id="adultHiddenText"><span id="adultHiddenCount">0</span> elemento(s) +18 oculto(s).</span></div><div class="quick-links" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><a href="#catalogGrid" style="color:var(--accent); font-size:14px;">Ver catálogo principal</a><a href="#porValidar" style="color:var(--accent); font-size:14px;">Ver cuadros por validar</a></div>
+<div class="stats"><span id="visibleCount">274</span> de <span id="totalCount">274</span> entradas visibles en catálogo principal. 3 cuadro(s) separado(s) por validar.</div><div class="quick-links" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><a href="#catalogGrid" style="color:var(--accent); font-size:14px;">Ver catálogo principal</a><a href="#porValidar" style="color:var(--accent); font-size:14px;">Ver cuadros por validar</a></div>
 </header>
 <main class="catalog-grid" id="catalogGrid">
 
 
-  <article class="catalog-card" data-name="4 cut hero" data-status="en emisión" data-type="manhwa">
+<article class="catalog-card" data-name="4 cut hero" data-status="en emisión" data-type="manhwa">
 <div class="cover-box"><a class="cover-link" href="photos/photo_2@19-04-2025_09-06-58.jpg" target="_blank"><img alt="4 Cut Hero" class="cover" src="photos/photo_2@19-04-2025_09-06-58.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
@@ -132,29 +74,29 @@
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info">🌀▹Manhwa: 4 Cut Hero <br/><br/>🌀▹Autor: ギユー<br/>🌀▹Artista: ギユー<br/>🌀▹Estado: En Emisión (186/???)<br/>🌀▹Género: Aventura, Comedia, Ecchi, Fantasia, Romance, Harem, Sobrenatural<br/>🌀▹Fansub: DarkSky Scan / Honmono ga Hoshii Scan / Ajce Translations &amp; Dark Nebulus<br/><br/>🌀▹Sinopsis: ¡El héroe ha derrotado al Rey Demonio! Pero la princesa que quería salvar resultó ser un príncipe. NEETdom, aquí viene, pero una vida de relajación rodeada de animes es un trato bastante dulce. Desafortunadamente, queda atrapado en milenarias leyendas, maldiciones y una trama retorcida que involucra múltiples reinos y muchos dragones. De principio a fin, sin embargo, seguirá un camino de fantasía, incluso si eso implica que lo comparta con "villanos".<br/><br/><a href="" onclick='return ShowHashtag("4_Cut_Hero")'>#4_Cut_Hero</a></div>
+<div class="original-info">🌀▹Manhwa: 4 Cut Hero <br/><br/>🌀▹Autor: ギユー<br/>🌀▹Artista: ギユー<br/>🌀▹Estado: Finalizado (251)<br/>🌀▹Género: Aventura, Comedia, Ecchi, Fantasia, Romance, Harem, Sobrenatural<br/>🌀▹Fansub: DarkSky Scan / Honmono ga Hoshii Scan / Ajce Translations &amp; Dark Nebulus<br/><br/>🌀▹Sinopsis: ¡El héroe ha derrotado al Rey Demonio! Pero la princesa que quería salvar resultó ser un príncipe. NEETdom, aquí viene, pero una vida de relajación rodeada de animes es un trato bastante dulce. Desafortunadamente, queda atrapado en milenarias leyendas, maldiciones y una trama retorcida que involucra múltiples reinos y muchos dragones. De principio a fin, sin embargo, seguirá un camino de fantasía, incluso si eso implica que lo comparta con "villanos".<br/><br/><a href="" onclick='return ShowHashtag("4_Cut_Hero")'>#4_Cut_Hero</a></div>
 </details>
 </div>
 </article>
 
-<article class="catalog-card" data-name="asesino de la luna" data-status="en emisión" data-type="manhua">
+<article class="catalog-card" data-name="asesino de la luna" data-status="cancelado" data-type="manhua">
 <div class="cover-box"><a class="cover-link" href="photos/photo_3@19-04-2025_09-06-58.jpg" target="_blank"><img alt="Asesino De La Luna" class="cover" src="photos/photo_3@19-04-2025_09-06-58.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Asesino De La Luna</h2>
-<div class="chips"><span class="chip type">Manhua</span><span class="chip status">Finalizado</span></div>
+<div class="chips"><span class="chip type">Manhua</span><span class="chip status">Cancelado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info">⌗│⛩⤿ 𝙉𝙤𝙢𝙗𝙧𝙚 ➳ Asesino De La Luna<br/>❥🍢│⤿ 𝘼𝙪𝙩𝙤𝙧(𝙖) ➳ <br/>⌗│⛩⤿ 𝙏𝙞𝙥𝙤 ➳ <a href="" onclick='return ShowHashtag("Manhua")'>#Manhua</a><br/>❥🍢│⤿ 𝙂é𝙣𝙚𝙧𝙤 ➳ <a href="" onclick='return ShowHashtag("Accion")'>#Accion</a> <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a> <a href="" onclick='return ShowHashtag("Fantasía")'>#Fantasía</a> <a href="" onclick='return ShowHashtag("Artes_Marciales")'>#Artes_Marciales</a> <br/>⌗│⛩⤿ 𝘾𝙖𝙥𝙞𝙩𝙪𝙡𝙤𝙨 ➳ (76 <strong>Cancelado - Autor</strong>)<br/>❥🍢│⤿ 𝙀𝙨𝙩𝙖𝙙𝙤 ➳ En Emisión.<br/>⌗│⛩⤿ 𝙁𝙖𝙣𝙨𝙪𝙗 ➳ Jeaz Scan<br/>❥🍢│⤿ 𝙎𝙞𝙣𝙤𝙥𝙨𝙞𝙨 : En un mundo virtual llamado Illusionary Moon, un jugador se convierte en el jefe supremo, obteniendo habilidades y objetos únicos que lo convierten en el personaje más poderoso. Con un Códice Secreto Shura, un Manual de Logros y un misterioso brazalete, empieza su travesía para descubrir los secretos del juego y alterar el destino del mundo digital. Decidido a eliminar a todo aquel que se cruce en su camino, desde gremios hasta jefes, el protagonista busca ser el único rey verdadero. A medida que su poder crece, el mundo tiembla a su paso, y sus planes para dominar el juego apenas comienzan.<br/><br/><a href="" onclick='return ShowHashtag("Asesino_De_La_Luna")'>#Asesino_De_La_Luna</a></div>
+<div class="original-info">⌗│⛩⤿ 𝙉𝙤𝙢𝙗𝙧𝙚 ➳ Asesino De La Luna<br/>❥🍢│⤿ 𝘼𝙪𝙩𝙤𝙧(𝙖) ➳ <br/>⌗│⛩⤿ 𝙏𝙞𝙥𝙤 ➳ <a href="" onclick='return ShowHashtag("Manhua")'>#Manhua</a><br/>❥🍢│⤿ 𝙂é𝙣𝙚_r_o ➳ <a href="" onclick='return ShowHashtag("Accion")'>#Accion</a> <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a> <a href="" onclick='return ShowHashtag("Fantasía")'>#Fantasía</a> <a href="" onclick='return ShowHashtag("Artes_Marciales")'>#Artes_Marciales</a> <br/>⌗│⛩⤿ 𝘾𝙖𝙥𝙞𝙩𝙪𝙡𝙤𝙨 ➳ (76 <strong>Cancelado - Autor</strong>)<br/>❥🍢│⤿ 𝙀𝙨𝙩𝙖d_o ➳ Cancelado.<br/>⌗│⛩⤿ 𝙁𝙖𝙣𝙨𝙪𝙗 ➳ Jeaz Scan<br/>❥🍢│⤿ 𝙎𝙞𝙣_o𝙥𝙨_i_𝙨 : En un mundo virtual llamado Illusionary Moon, un jugador se convierte en el jefe supremo, obteniendo habilidades y objetos únicos que lo convierten en el personaje más poderoso. Con un Códice Secreto Shura, un Manual de Logros y un misterioso brazalete, empieza su travesía para descubrir los secretos del juego y alterar el destino del mundo digital. Decidido a eliminar a todo aquel que se cruce en su camino, desde gremios hasta jefes, el protagonista busca ser el único rey verdadero. A medida que su poder crece, el mundo tiembla a su paso, y sus planes para dominar el juego apenas comienzan.<br/><br/><a href="" onclick='return ShowHashtag("Asesino_De_La_Luna")'>#Asesino_De_La_Luna</a></div>
 </details>
 </div>
 </article>
 
-<article class="catalog-card" data-name="book eater (책 먹는 마법사)" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_5@19-04-2025_09-06-58.jpg" target="_blank"><img alt="Book Eater (책 먹는 마법사)" class="cover" src="photos/photo_5@19-04-2025_09-06-58.jpg"/></a></div>
+<article class="catalog-card" data-name="book eater" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_5@19-04-2025_09-06-58.jpg" target="_blank"><img alt="Book Eater" class="cover" src="photos/photo_5@19-04-2025_09-06-58.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Book Eater (책 먹는 마법사)</h2>
+<h2>Book Eater</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">114</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -267,15 +209,15 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="existencia / existence" data-status="" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_15@19-04-2025_09-08-02.jpg" target="_blank"><img alt="Existencia / Existence" class="cover" src="photos/photo_15@19-04-2025_09-08-02.jpg"/></a></div>
+<article class="catalog-card" data-name="existencia" data-status="" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_15@19-04-2025_09-08-02.jpg" target="_blank"><img alt="Existencia" class="cover" src="photos/photo_15@19-04-2025_09-08-02.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Existencia / Existence</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(72/72)</span></div>
+<h2>Existencia</h2>
+<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">72</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info"><a href="" onclick='return ShowHashtag("Existencia")'>#Existencia</a><br/><br/>🔸Nombre: Existencia / Existence<br/>🔸Género: Acción, Aventura, Ciencia Ficción, Fantasía, Psicológico.<br/>🔸Autor: Gwang-Jin.<br/>🔸Artista: Kim Kyeong-Joon.<br/>🔸Capítulos: 72<br/>🔸Fansubs: Olympus Scanlation.<br/><br/>🔸Descripción: La historia nos lleva con Lee Jain, un ser que ha pasado por varias reencarnaciones, desde ser parte de una manada de hormigas hasta convertirse en un imponente dinosaurio, y que ha adquirido los poderes de todas esas formas de vida. En su última reencarnación, Lee Jain renace como ser humano con un poder sobrenatural. Con el tiempo, comprende que su propósito es acabar con la humanidad.</div>
+<div class="original-info">✔️ ⊳<strong>Manhwa</strong><a href="" onclick='return ShowHashtag("Existencia")'>#Existencia</a><br/><br/>🔸Nombre: Existencia / Existence<br/>🔸Género: Acción, Aventura, Ciencia Ficción, Fantasía, Psicológico.<br/>🔸Autor: Gwang-Jin.<br/>🔸Artista: Kim Kyeong-Joon.<br/>🔸Capítulos: 72<br/>🔸Fansubs: Olympus Scanlation.<br/><br/>🔸Descripción: La historia nos lleva con Lee Jain, un ser que ha pasado por varias reencarnaciones, desde ser parte de una manada de hormigas hasta convertirse en un imponente dinosaurio, y que ha adquirido los poderes de todas esas formas de vida. En su última reencarnación, Lee Jain renace como ser humano con un poder sobrenatural. Con el tiempo, comprende que su propósito es acabar con la humanidad.</div>
 </details>
 </div>
 </article>
@@ -311,10 +253,10 @@
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Invencible Desde El Principio</h2>
-<div class="chips"><span class="chip type">Manhua</span><span class="chip status">Emisión</span></div>
+<div class="chips"><span class="chip type">Manhua</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info">╔──═¤ೋ◎⛩◎ೋ¤═──╗<br/><br/>㊗️𝑁𝑜𝑚𝑏𝑟𝑒: Invencible Desde El Principio<br/>㊗️𝑇𝑖𝑝𝑜: <a href="" onclick='return ShowHashtag("Manhua")'>#Manhua</a> <a href="" onclick='return ShowHashtag("Invencible_Desde_El_Principio")'>#Invencible_Desde_El_Principio</a><br/>㊗️𝐴𝑢𝑡𝑜𝑟: Boyi Animación<br/>㊗️𝐶𝑎𝑝𝑖𝑡𝑢𝑙𝑜𝑠: [101/?]<br/>㊗️𝐺𝑒𝑛𝑒𝑟𝑜: <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a>, <a href="" onclick='return ShowHashtag("Harem")'>#Harem</a>, <a href="" onclick='return ShowHashtag("Artes_marciales")'>#Artes_marciales</a>, <a href="" onclick='return ShowHashtag("Reencarnación")'>#Reencarnación</a>, <a href="" onclick='return ShowHashtag("Comedia")'>#Comedia</a> <a href="" onclick='return ShowHashtag("Seinen")'>#Seinen</a> <br/>㊗️𝐹𝑎𝑛𝑠𝑢𝑏𝑠: Raiki Scan<br/>㊗️𝐹𝑜𝑟𝑚𝑎𝑡𝑜: 𝑃𝐷𝐹<br/>㊗️𝐸𝑠𝑡𝑎𝑑𝑜: <a href="" onclick='return ShowHashtag("Emisión")'>#Emisión</a><br/>㊗️𝑆𝑖𝑛𝑜𝑝𝑠𝑖𝑠: "¡Ding, el anfitrión ha abierto el dominio invencible! El anfitrión es invencible mientras esté dentro del dominio". Chen Chang'an viaja por el mundo de la fantasía mística, enfrentándose a los innumerables demonios y monstruos del mundo exterior, Chen Chang'an decide no abandonar nunca su dominio invencible antes de convertirse en inmortal. Cuando se aburre, de vez en cuando cría a unos cuantos discípulos simpáticos y dulces, que accidentalmente se convierten en peces gordos del mundo del cultivo y ponen el mundo patas arriba.<br/><br/><br/>╚──═¤ೋ◎⛩◎ೋ¤═──╝</div>
+<div class="original-info">╔──═¤ೋ◎⛩◎ೋ¤═──╗<br/><br/>㊗️𝑁𝑜𝑚𝑏𝑟𝑒: Invencible Desde El Principio<br/>㊗️𝑇𝑖𝑝𝑜: <a href="" onclick='return ShowHashtag("Manhua")'>#Manhua</a> <a href="" onclick='return ShowHashtag("Invencible_Desde_El_Principio")'>#Invencible_Desde_El_Principio</a><br/>㊗️𝐴𝑢𝑡𝑜𝑟: Boyi Animación<br/>㊗️𝐶𝑎𝑝𝑖𝑡𝑢𝑙𝑜𝑠: [101/?]<br/>㊗️𝐺𝑒𝑛𝑒𝑟𝑜: <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a>, <a href="" onclick='return ShowHashtag("Harem")'>#Harem</a>, <a href="" onclick='return ShowHashtag("Artes_marciales")'>#Artes_marciales</a>, <a href="" onclick='return ShowHashtag("Reencarnación")'>#Reencarnación</a>, <a href="" onclick='return ShowHashtag("Comedia")'>#Comedia</a> <a href="" onclick='return ShowHashtag("Seinen")'>#Seinen</a> <br/>㊗️𝐹𝑎𝑛𝑠𝑢𝑏𝑠: Raiki Scan<br/>㊗️𝐹𝑜𝑟𝑚𝑎𝑡𝑜: 𝑃𝐷𝐹<br/>㊗️𝐸𝑠𝑡𝑎𝑑𝑜: <a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a><br/>㊗️𝑆𝑖𝑛𝑜𝑝𝑠𝑖𝑠: "¡Ding, el anfitrión ha abierto el dominio invencible! El anfitrión es invencible mientras esté dentro del dominio". Chen Chang'an viaja por el mundo de la fantasía mística, enfrentándose a los innumerables demonios y monstruos del mundo exterior, Chen Chang'an decide no abandonar nunca su dominio invencible antes de convertirse en inmortal. Cuando se aburre, de vez en cuando cría a unos cuantos discípulos simpáticos y dulces, que accidentalmente se convierten en peces gordos del mundo del cultivo y ponen el mundo patas arriba.<br/><br/><br/>╚──═¤ೋ◎⛩◎ೋ¤═──╝</div>
 </details>
 </div>
 </article>
@@ -324,10 +266,10 @@
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>La Magia de un Retornado Debe ser Especial</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Emisión</span></div>
+<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info">╔╦══•舞•✠•漫 🚧 漫•✠•舞•═══╦╗<br/><br/>⚠️☠️ 𝑁𝑜𝑚𝑏𝑟𝑒: La Magia de un Retornado Debe ser Especial<br/>⚠️☠️𝑇𝑖𝑝𝑜: <a href="" onclick='return ShowHashtag("Manhwa")'>#Manhwa</a> <a href="" onclick='return ShowHashtag("La_Magia_de_un_retornado_debe_ser_especial")'>#La_Magia_de_un_retornado_debe_ser_especial</a><br/>⚠️☠️𝐴𝑢𝑡𝑜𝑟: Yu So Nan<br/>⚠️☠️𝐶𝑎𝑝𝑖𝑡𝑢𝑙𝑜𝑠: [243/?]<br/>⚠️☠️𝐺𝑒𝑛𝑒𝑟𝑜: <a href="" onclick='return ShowHashtag("Accion")'>#Accion</a>, <a href="" onclick='return ShowHashtag("Reencarnación")'>#Reencarnación</a>, <a href="" onclick='return ShowHashtag("Romance")'>#Romance</a>, <a href="" onclick='return ShowHashtag("Fantasia")'>#Fantasia</a>, <a href="" onclick='return ShowHashtag("Harem")'>#Harem</a>, <a href="" onclick='return ShowHashtag("Superpoderes")'>#Superpoderes</a><br/>⚠️☠️𝐹𝑎𝑛𝑠𝑢𝑏𝑠: <br/>⚠️☠️𝐹𝑜𝑟𝑚𝑎𝑡𝑜: 𝑃𝐷𝐹<br/>⚠️☠️𝐸𝑠𝑡𝑎𝑑𝑜: <a href="" onclick='return ShowHashtag("Emisión")'>#Emisión</a><br/>⚠️☠️𝑆𝑖𝑛𝑜𝑝𝑠𝑖𝑠: "Ahora que estoy de vuelta, ¡no permitiré que mis seres queridos mueran de nuevo!"<br/>Desir es devuelto al pasado, al tiempo en que se inscribió en la mejor academia de magia de la nación: Havrion. ¡Se reúne con sus preciosos amigos y está preparado para cambiar el pasado para salvar al mundo y a sus seres queridos ...!<br/>¡Quedan tres años antes de la aparición del Mundo de las Sombras!<br/>¡Cambia el pasado y reúne a compañeros poderosos para salvar a la humanidad!<br/><br/>╚╩══•舞•✠•漫 🚧 漫•✠•舞•═══╩╝</div>
+<div class="original-info">╔╦══•舞•✠•漫 🚧 漫•✠•舞•═══╦╗<br/><br/>⚠️☠️ 𝑁𝑜𝑚𝑏𝑟𝑒: La Magia de un Retornado Debe ser Especial<br/>⚠️☠️𝑇𝑖𝑝𝑜: <a href="" onclick='return ShowHashtag("Manhwa")'>#Manhwa</a> <a href="" onclick='return ShowHashtag("La_Magia_de_un_retornado_debe_ser_especial")'>#La_Magia_de_un_retornado_debe_ser_especial</a><br/>⚠️☠️𝐴𝑢𝑡𝑜𝑟: Yu So Nan<br/>⚠️☠️𝐶𝑎𝑝𝑖𝑡𝑢𝑙𝑜𝑠: [243/?]<br/>⚠️☠️𝐺𝑒𝑛𝑒𝑟𝑜: <a href="" onclick='return ShowHashtag("Accion")'>#Accion</a>, <a href="" onclick='return ShowHashtag("Reencarnación")'>#Reencarnación</a>, <a href="" onclick='return ShowHashtag("Romance")'>#Romance</a>, <a href="" onclick='return ShowHashtag("Fantasia")'>#Fantasia</a>, <a href="" onclick='return ShowHashtag("Harem")'>#Harem</a>, <a href="" onclick='return ShowHashtag("Superpoderes")'>#Superpoderes</a><br/>⚠️☠️𝐹𝑎𝑛𝑠𝑢𝑏𝑠: <br/>⚠️☠️𝐹𝑜𝑟𝑚𝑎𝑡𝑜: 𝑃𝐷𝐹<br/>⚠️☠️𝐸𝑠𝑡𝑎𝑑𝑜: <a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a><br/>⚠️☠️𝑆𝑖𝑛𝑜𝑝𝑠𝑖𝑠: "Ahora que estoy de vuelta, ¡no permitiré que mis seres queridos mueran de nuevo!"<br/>Desir es devuelto al pasado, al tiempo en que se inscribió en la mejor academia de magia de la nación: Havrion. ¡Se reúne con sus preciosos amigos y está preparado para cambiar el pasado para salvar al mundo y a sus seres queridos ...!<br/>¡Quedan tres años antes de la aparición del Mundo de las Sombras!<br/>¡Cambia el pasado y reúne a compañeros poderosos para salvar a la humanidad!<br/><br/>╚╩══•舞•✠•漫 🚧 漫•✠•舞•═══╩╝</div>
 </details>
 </div>
 </article>
@@ -475,12 +417,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="el chef centenario" data-status="finalizado" data-type="manhwa">
+<article class="catalog-card" data-name="el chef centenario" data-status="finalizado" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_45@19-04-2025_09-11-30.jpg" target="_blank"><img alt="El Chef Centenario" class="cover" src="photos/photo_45@19-04-2025_09-11-30.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>El Chef Centenario</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">70/70</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span><span class="chip chapters">70/70</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🍣 Nombre: El Chef Centenario<br/><br/>🍣 Capitulos: 70/70<br/>🍣 Genero: <a href="" onclick='return ShowHashtag("Drama")'>#Drama</a> <a href="" onclick='return ShowHashtag("Fantasia")'>#Fantasia</a> <a href="" onclick='return ShowHashtag("Recuerdos_de_la_vidal")'>#Recuerdos_de_la_vidal</a><br/>🍣 Estado: <a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a> <br/><br/>🍣 Sinopsis:<br/><br/>El mejor chef del mundo.  Primera, segunda, tercera...... Y la sexta vida. El tiempo combinado dedicado a la cocina es de más de 100 años. "Ya no puedo hacerlo más". Sólo hay una manera de evitar la regresión repetitiva sin fin. Esta vez lo lograré.<br/><br/><a href="" onclick='return ShowHashtag("El_Chef_Centenario")'>#El_Chef_Centenario</a></div>
@@ -553,12 +495,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="sistema de bomberos al rescate" data-status="" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_56@19-04-2025_09-12-47.jpg" target="_blank"><img alt="Sistema de bomberos al rescate" class="cover" src="photos/photo_56@19-04-2025_09-12-47.jpg"/></a></div>
+<article class="catalog-card" data-name="rescue system / sistema de bomberos al rescate" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_56@19-04-2025_09-12-47.jpg" target="_blank"><img alt="Rescue System / Sistema de bomberos al rescate" class="cover" src="photos/photo_56@19-04-2025_09-12-47.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Sistema de bomberos al rescate</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">73/73</span></div>
+<h2>Rescue System / Sistema de bomberos al rescate</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">73</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("Rescue_System")'>#Rescue_System</a><br/><br/>🔸Nombre: Rescue System / Sistema de bomberos al rescate<br/>🔸Género: Acción, Comedia, Drama, Fantasia, Realidad, Recuentos de la Vida.<br/>🔸Autor: Guyu, hezio95.<br/>🔸Artista: Sang-Ki Hong<br/>🔸Capítulos: 73<br/>🔸Fansubs: Hada Scans, Hermes Scan.<br/><br/>🔸Descripción: Kim Soohyuk, un veterano rescatista de Shinil-seo, murió aplastado durante una operación de rescate en un edificio que se derrumbaba. Soohyuk, que creía estar muerto, abrió los ojos en un incidente ocurrido hace 10 años. [Pudo salvar a dos personas que no pudo salvar en el pasado] Como recompensa, también recibió nuevas habilidades y fuerza. "Genial. A partir de ahora, ¡salvaré las vidas de aquellos que no pude salvar en el pasado!</div>
@@ -605,12 +547,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="the boxer" data-status="" data-type="manhwa">
+<article class="catalog-card" data-name="the boxer" data-status="" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_60@19-04-2025_09-13-11.jpg" target="_blank"><img alt="The Boxer" class="cover" src="photos/photo_60@19-04-2025_09-13-11.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>The Boxer</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">105</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">105</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("The_Boxer")'>#The_Boxer</a><br/><br/>🔸Nombre: The Boxer<br/>🔸Género: Deportes, Artes Marciales, Acción.<br/>🔸Autor: Jung Ji-Hoon<br/>🔸Artistas: Jung Ji-Hoon<br/>🔸Capítulos: 105<br/>🔸Fansubs: Olympus Scanlation, Sithrah, Koi no Yokan Fansub, Obsignature.<br/><br/>🔸Descripción: Tienes el talento en bruto. O eres el más débil. ¿Pero tienes el corazón? ¿Tienes lo que hay que tener? Veamos de qué estás hecho. La verdadera lucha comienza ahora.</div>
@@ -618,12 +560,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="the god of high school" data-status="" data-type="manhwa">
+<article class="catalog-card" data-name="the god of high school" data-status="" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_61@19-04-2025_09-13-33.jpg" target="_blank"><img alt="The God of High School" class="cover" src="photos/photo_61@19-04-2025_09-13-33.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>The God of High School</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">569</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">569</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("The_God_of_High_School")'>#The_God_of_High_School</a><br/><br/>🔸Nombre: The God of High School<br/>🔸Género: Acción, Aventura, Comedia, Fantasia, Supernatural, Artes Marciales. <br/>🔸Autor: Yong-Je Park<br/>🔸Artista: Yong-Je Park<br/>🔸Capítulos: 569<br/>🔸Fansubs: Hellstone no fansub, Mixam Scans, Lyxe Translation, Taurus scan<br/><br/>🔸Descripción: La historia trata sobre una organización que manda invitaciones a peleadores de todo el mundo a que vayan a una isla que está a punto de destruirse para competir en un torneo en donde el ganador podrá escoger lo que él quiera de premio. Mori Jin quien proclama ser el más fuerte de su escuela, además de que tiene una gran habilidad en el Tae Kwon Do, es invitado a dicho torneo para en verdad demostrar si es el más fuerte del mundo.<br/><br/>🔸<strong>El anime adapta hasta el capítulo 112</strong></div>
@@ -631,12 +573,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="sangre vengadora" data-status="" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_62@19-04-2025_09-13-34.jpg" target="_blank"><img alt="Sangre Vengadora" class="cover" src="photos/photo_62@19-04-2025_09-13-34.jpg"/></a></div>
+<article class="catalog-card" data-name="unholy blood / sangre vengadora / white blood" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_62@19-04-2025_09-13-34.jpg" target="_blank"><img alt="Unholy Blood / Sangre Vengadora / White Blood" class="cover" src="photos/photo_62@19-04-2025_09-13-34.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Sangre Vengadora</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">93</span></div>
+<h2>Unholy Blood / Sangre Vengadora / White Blood</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">93</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🔸Nombre: Unholy Blood / Sangre Vengadora / White Blood<br/>🔸Género: Acción, Drama, Romance, Supernatural.<br/>🔸Autor: Li-Na Lim<br/>🔸Artista: Li-Na Lim<br/>🔸Capítulos: 93<br/>🔸Fansubs: <br/><br/>🔸Descripción: Cuando los vampiros destruyen su oportunidad de tener la vida normal que siempre quiso, Hayan utilizará su secreto más oscuro para liberar al mundo de los despiadados cazadores que lo controlan desde hace más de 10 años. Con la ayuda de la nueva promesa de las fuerzas policiales, Hayan protegerá a sus seres queridos, enfrentará a su pasado y obtendrá su venganza.<br/><br/><a href="" onclick='return ShowHashtag("Sangre_Vengadora")'>#Sangre_Vengadora</a><br/><a href="" onclick='return ShowHashtag("Unholy_Blood")'>#Unholy_Blood</a></div>
@@ -831,7 +773,7 @@
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Bleach</h2>
-<div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">686</span></div>
+<div class="chips"><span class="chip type">Manga</span><span class="chip chapters">686</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🉐<strong>Título:</strong> Bleach<br/>㊙️<strong>Etiquetas:</strong> <a href="" onclick='return ShowHashtag("Manga")'>#Manga</a> <a href="" onclick='return ShowHashtag("Bleach")'>#Bleach</a><strong><br/>✔️Géneros: </strong><a href="" onclick='return ShowHashtag("Acción")'>#Acción</a>, <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a>, <a href="" onclick='return ShowHashtag("Sobrenatural")'>#Sobrenatural</a>, <a href="" onclick='return ShowHashtag("Shounen")'>#Shounen</a><br/>✔️<strong>Tomos:</strong> 74 + Extra <br/>✔️<strong>Capitulos:</strong> 686<br/>✔️<strong>Autor:</strong> Tite Kubo<br/>✔️<strong>Traducción: </strong>Soul Craft Fansub y no se quien mas<br/><br/>🀄️<strong>Sinopsis: </strong>Ichigo Kurosaki siempre ha sido capaz de ver fantasmas, pero esta habilidad no cambia su vida tanto como su encuentro cercano con Rukia Kuchiki, un Soul Reaper y miembro de la misteriosa Soul Society. Mientras lucha contra un Hollow, un espíritu maligno que se aprovecha de los humanos que muestran energía psíquica, Rukia intenta prestarle a Ichigo algunos de sus poderes para que pueda salvar a su familia; pero para su sorpresa, Ichigo absorbe hasta la última gota de su energía. Ahora que él mismo es un Segador de almas, Ichigo aprende rápidamente que el mundo en el que habita está lleno de espíritus peligrosos.<br/><br/><a href="" onclick='return ShowHashtag("Bleach")'>#Bleach</a></div>
@@ -891,11 +833,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="fire force" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_95@19-04-2025_09-18-16.jpg" target="_blank"><img alt="Fire Force" class="cover" src="photos/photo_95@19-04-2025_09-18-16.jpg"/></a></div>
+<article class="catalog-card" data-name="enen no shouboutai fire force - (炎炎ノ消防隊)" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_95@19-04-2025_09-18-16.jpg" target="_blank"><img alt="Enen no Shouboutai Fire Force - (炎炎ノ消防隊)" class="cover" src="photos/photo_95@19-04-2025_09-18-16.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Fire Force</h2>
+<h2>Enen no Shouboutai Fire Force - (炎炎ノ消防隊)</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">304</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -904,11 +846,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="dungeon meshi" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_97@19-04-2025_09-24-47.jpg" target="_blank"><img alt="Dungeon Meshi" class="cover" src="photos/photo_97@19-04-2025_09-24-47.jpg"/></a></div>
+<article class="catalog-card" data-name="dungeon meshi delicious in dungeon (ダンジョン飯)" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_97@19-04-2025_09-24-47.jpg" target="_blank"><img alt="Dungeon Meshi Delicious in Dungeon (ダンジョン飯)" class="cover" src="photos/photo_97@19-04-2025_09-24-47.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Dungeon Meshi</h2>
+<h2>Dungeon Meshi Delicious in Dungeon (ダンジョン飯)</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">97</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -995,6 +937,19 @@
 </div>
 </article>
 
+<article class="catalog-card" data-name="nota: si te viste el anime y quieres leerte el manga debes leer desde el" data-status="" data-type="manga">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>Nota: Si te viste el anime y quieres leerte el manga debes leer desde el</h2>
+<div class="chips"><span class="chip type">Manga</span><span class="chip chapters">45</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">🈹️Nota: Si te viste el anime y quieres leerte el manga debes leer desde el capítulo 45.</div>
+</details>
+</div>
+</article>
+
 <article class="catalog-card" data-name="jujutsu kaisen" data-status="finalizado" data-type="manga">
 <div class="cover-box"><a class="cover-link" href="photos/photo_105@19-04-2025_11-15-51.jpg" target="_blank"><img alt="Jujutsu Kaisen" class="cover" src="photos/photo_105@19-04-2025_11-15-51.jpg"/></a></div>
 <div class="card-content">
@@ -1017,6 +972,19 @@
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🉐️Título: Kaguya-Sama: Love Is War<br/><a href="" onclick='return ShowHashtag("Manga")'>#Manga</a> <a href="" onclick='return ShowHashtag("KaguyaSama_Love_Is_War")'>#KaguyaSama_Love_Is_War</a><br/>✔️ Autor: Aka Akasaka<br/>✔️ Artista: Aka Akasaka<br/>✔️ Tomos: 28<br/>✔️ Capítulos: 281<br/>✔️ Formato: PDF<br/>✔️ Estado: Finalizado<br/>✔️ Traducción: Soul Craft Fansub, Neo Project Scanlation, Bakaguya Scanlation<br/>✔️ Género: Comedia, Psicológico, Romance, Vida Escolar, Drama, Recuentos de la vida.<br/><br/>🔰🔱 Sinopsis...<br/>Kaguya Shinomiya y Miyuki Shirogane son miembros del consejo estudiantil de la increíblemente prestigiosa academia Shuchi"in, afirmando sus posiciones como genios entre los genios. Todo el tiempo que han pasado juntos ha ocasionado que empiecen a desarrollar sentimientos hacia el otro, sin embargo, ¡Su orgullo no les permite confesarse y sumirse en una relación! El amor es una guerra, y su batalla para hacer que el otro se confiese, ¡Empieza ahora!<br/><br/>🔶 <a href="https://t.me/AniMangaNovel">@AniMangaNovel</a> 🔶</div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name="la primera temporada]" data-status="" data-type="manga">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>La Primera Temporada]</h2>
+<div class="chips"><span class="chip type">Manga</span><span class="chip chapters">01</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">🔶 [La Primera Temporada]<br/>Adaptó desde el Tomo 01 capítulo 01 hasta el Tomo 05 Capítulo 47 del Manga.<br/><br/>🔶 [La Segunda Temporada]<br/>Adaptó desde el Tomo 5 Capítulo 48 hasta el Tomo 09 Capítulo 91 del Manga.<br/><br/>🔶 [La Tercera Temporada]<br/>Adaptó desde el Tomo 10 Capítulo 92 Hasta el Tomo 14 Capítulo 137 del Manga.</div>
 </details>
 </div>
 </article>
@@ -1156,7 +1124,7 @@
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Mashle Magic and Muscles</h2>
-<div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(162/162)</span></div>
+<div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🌀▹Manga: Mashle Magic and Muscles <br/><br/>🌀▹Autor: Hajime Koumoto<br/>🌀▹Artista: Hajime Koumoto<br/>🌀▹Estado: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a> (162/162)<br/>🌀▹Género: Acción, Aventura, Comedia, Magia, Vida Escolar, Sobrenatural<br/>🌀▹Fansub: MANGA Plus by SHUEISHA<br/><br/>🌀▹Sinopsis: La historia transcurre en un mundo en el que la magia existe y se usa para todo tipo de cosas. En lo profundo del bosque, un joven pasa sus días entrenando sus músculos y aunque no puede usar magia, pasa sus días en paz con su padre. Un día, es descubierto y su vida corre peligro. ¿Su cuerpo musculoso y entrenado podrá salvarlo de la magia?<br/><br/><a href="" onclick='return ShowHashtag("Mashle_Magic_and_Muscles")'>#Mashle_Magic_and_Muscles</a></div>
@@ -1428,11 +1396,11 @@
 <div class="cover-box"><a class="cover-link" href="photos/photo_169@26-04-2025_09-35-54.jpg" target="_blank"><img alt="Nombres🧟: The Walking Dead | Los Muertos Vivientes." class="cover" src="photos/photo_169@26-04-2025_09-35-54.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>The Walking Dead | Los Muertos Vivientes.</h2>
-<div class="chips"><span class="chip type">Comic</span><span class="chip status">Finalizado</span><span class="chip chapters">193/193</span></div>
+<h2>Nombres🧟: The Walking Dead | Los Muertos Vivientes.</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info"><strong>»🧟‍♂️Nombres</strong>The Walking Dead | Los Muertos Vivientes. <br/><strong>»Estado</strong>🎯: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a> ✅<br/><strong>»Géneros📌:</strong> <a href="" onclick='return ShowHashtag("Acción")'>#Acción</a>, <a href="" onclick='return ShowHashtag("Apocalipsis_Zombie")'>#Apocalipsis_Zombie</a>, <a href="" onclick='return ShowHashtag("Drama")'>#Drama</a>, <a href="" onclick='return ShowHashtag("Horror")'>#Horror</a>, <a href="" onclick='return ShowHashtag("Post_Apocalíptico")'>#Post_Apocalíptico</a>, <a href="" onclick='return ShowHashtag("Zombies")'>#Zombies</a>.<strong><br/>»Autores✍️:</strong> Robert Kirkman, Tony Moore. <strong><br/>»Artistas🎨:</strong> Tony Moore (Ilustrador), Charlie Adlard, Rus Wooton (Rotulista), Cliff Rathburn (Colorista). <br/><strong>»Formato</strong>📰: B/N (Blanco y Negro).<br/>»<strong>Tipo</strong>🇺🇸: <a href="" onclick='return ShowHashtag("Cómic")'>#Cómic</a>.<br/>»<strong>Etiqueta🔖:</strong> <a href="" onclick='return ShowHashtag("The_Walking_Dead")'>#The_Walking_Dead</a>.<strong><br/>»Año🗓: </strong><a href="" onclick='return ShowHashtag("Año_2003")'>#Año_2003</a>.<strong><br/>»Volúmenes📚:</strong> 32/32.<strong><br/>»Capítulos🎬:</strong> 193/193.<strong><br/>»📪Editorial📬:</strong> ImageComics. <br/><strong>»Sentido de Lectura📖: </strong>Occidental➡️ [Derecha a izquierda].<strong><br/>»Sinopsis📝:</strong><br/>El cómic se centra en Rick Grimes, un sheriff adjunto de Georgia que resulta herido durante un tiroteo y termina en estado de coma. Cuando despierta, se da cuenta de que está en un mundo arrasado por caníbales semimuertos que lo único que buscan es devorar a todo ser vivo que se cruce en su camino. Sin saber qué ha pasado a su alrededor, Rick emprende una búsqueda para encontrar a su familia. En Atlanta encuentra a...<br/><br/>Créditos para el canal <br/><strong>『✨📚</strong><a href="https://t.me/LeeTuMangaa">@LeeTuMangaa</a><strong>📚✨』</strong></div>
+<div class="original-info"><strong>»🧟‍♂️Nombres</strong>🧟: The Walking Dead | Los Muertos Vivientes. <br/><strong>»Estado</strong>🎯: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a> ✅<br/><strong>»Géneros📌:</strong> <a href="" onclick='return ShowHashtag("Acción")'>#Acción</a>, <a href="" onclick='return ShowHashtag("Apocalipsis_Zombie")'>#Apocalipsis_Zombie</a>, <a href="" onclick='return ShowHashtag("Drama")'>#Drama</a>, <a href="" onclick='return ShowHashtag("Horror")'>#Horror</a>, <a href="" onclick='return ShowHashtag("Post_Apocalíptico")'>#Post_Apocalíptico</a>, <a href="" onclick='return ShowHashtag("Zombies")'>#Zombies</a>.<strong><br/>»Autores✍️:</strong> Robert Kirkman, Tony Moore. <strong><br/>»Artistas🎨:</strong> Tony Moore (Ilustrador), Charlie Adlard, Rus Wooton (Rotulista), Cliff Rathburn (Colorista). <br/><strong>»Formato</strong>📰: B/N (Blanco y Negro).<br/>»<strong>Tipo</strong>🇺🇸: <a href="" onclick='return ShowHashtag("Cómic")'>#Cómic</a>.<br/>»<strong>Etiqueta🔖:</strong> <a href="" onclick='return ShowHashtag("The_Walking_Dead")'>#The_Walking_Dead</a>.<strong><br/>»Año🗓: </strong><a href="" onclick='return ShowHashtag("Año_2003")'>#Año_2003</a>.<strong><br/>»Volúmenes📚:</strong> 32/32.<strong><br/>»Capítulos🎬:</strong> 193/193.<strong><br/>»📪Editorial📬:</strong> ImageComics. <br/><strong>»Sentido de Lectura📖: </strong>Occidental➡️ [Derecha a izquierda].<strong><br/>»Sinopsis📝:</strong><br/>El cómic se centra en Rick Grimes, un sheriff adjunto de Georgia que resulta herido durante un tiroteo y termina en estado de coma. Cuando despierta, se da cuenta de que está en un mundo arrasado por caníbales semimuertos que lo único que buscan es devorar a todo ser vivo que se cruce en su camino. Sin saber qué ha pasado a su alrededor, Rick emprende una búsqueda para encontrar a su familia. En Atlanta encuentra a...<br/><br/>Créditos para el canal <br/><strong>『✨📚</strong><a href="https://t.me/LeeTuMangaa">@LeeTuMangaa</a><strong>📚✨』</strong></div>
 </details>
 </div>
 </article>
@@ -1454,7 +1422,7 @@
 <div class="cover-box"><a class="cover-link" href="photos/photo_188@26-04-2025_14-02-47.jpg" target="_blank"><img alt="Undead Unluck (アンデッドアンラック)" class="cover" src="photos/photo_188@26-04-2025_14-02-47.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Undead Unluck</h2>
+<h2>Undead Unluck (アンデッドアンラック)</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">240</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -1467,11 +1435,11 @@
 <div class="cover-box"><a class="cover-link" href="photos/photo_189@26-04-2025_19-22-43.jpg" target="_blank"><img alt="Campo De Batalla Sobrehumano/Campo de Batalla Super Humano" class="cover" src="photos/photo_189@26-04-2025_19-22-43.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Campo De Batalla Sobrehumano</h2>
+<h2>Campo De Batalla Sobrehumano/Campo de Batalla Super Humano</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">[151/151]</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info">㊙️<strong>Título</strong>: Campo De Batalla Sobrehumano<br/>✔️<strong>Tipo</strong>: <a href="" onclick='return ShowHashtag("Manhwa")'>#Manhwa</a><br/>✔️<strong>Etiqueta</strong>: <a href="" onclick='return ShowHashtag("Campo_De_Batalla_Sobrehumano")'>#Campo_De_Batalla_Sobrehumano</a><br/>✔️<strong>Capitulos</strong>: [151/151] <br/>✔️<strong>Genero</strong>: <a href="" onclick='return ShowHashtag("Acción")'>#Acción</a> <a href="" onclick='return ShowHashtag("Artes_Marciales")'>#Artes_Marciales</a> <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a> <a href="" onclick='return ShowHashtag("Fantasía")'>#Fantasía</a><br/>✔️<strong>Fansub</strong>: Traducciónes Amistosas | Olympus Scan<br/>✔️<strong>Formato</strong>: [𝑃𝐷𝐹]<br/>✔️<strong>Estado</strong>: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a> <br/><br/>🔰<strong>Sinopsis:</strong> Seo MoonYeob era el mayor superhombre del mundo, que se sacrificó tras salvar a la humanidad.<br/><br/>Se le creía muerto, pero regresa 17 años después a un mundo ahora en paz, y el deporte sobrehumano se enfrenta a un cambio sísmico.<br/><br/>¡La historia de una fantasía deportiva moderna comienza ahora!<br/><br/><a href="" onclick='return ShowHashtag("Campo_De_Batalla_Sobrehumano")'>#Campo_De_Batalla_Sobrehumano</a></div>
+<div class="original-info">㊙️<strong>Título</strong>: Campo De Batalla Sobrehumano/Campo de Batalla Super Humano<br/>✔️<strong>Tipo</strong>: <a href="" onclick='return ShowHashtag("Manhwa")'>#Manhwa</a><br/>✔️<strong>Etiqueta</strong>: <a href="" onclick='return ShowHashtag("Campo_De_Batalla_Sobrehumano")'>#Campo_De_Batalla_Sobrehumano</a><br/>✔️<strong>Capitulos</strong>: [151/151] <br/>✔️<strong>Genero</strong>: <a href="" onclick='return ShowHashtag("Acción")'>#Acción</a> <a href="" onclick='return ShowHashtag("Artes_Marciales")'>#Artes_Marciales</a> <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a> <a href="" onclick='return ShowHashtag("Fantasía")'>#Fantasía</a><br/>✔️<strong>Fansub</strong>: Traducciónes Amistosas | Olympus Scan<br/>✔️<strong>Formato</strong>: [𝑃𝐷𝐹]<br/>✔️<strong>Estado</strong>: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a> <br/><br/>🔰<strong>Sinopsis:</strong> Seo MoonYeob era el mayor superhombre del mundo, que se sacrificó tras salvar a la humanidad.<br/><br/>Se le creía muerto, pero regresa 17 años después a un mundo ahora en paz, y el deporte sobrehumano se enfrenta a un cambio sísmico.<br/><br/>¡La historia de una fantasía deportiva moderna comienza ahora!<br/><br/><a href="" onclick='return ShowHashtag("Campo_De_Batalla_Sobrehumano")'>#Campo_De_Batalla_Sobrehumano</a></div>
 </details>
 </div>
 </article>
@@ -1480,11 +1448,11 @@
 <div class="cover-box"><a class="cover-link" href="photos/photo_190@27-04-2025_09-35-45.jpg" target="_blank"><img alt="El Duque del Dragón Blanco: Pendragon (White Dragon Duke: Pendragon)" class="cover" src="photos/photo_190@27-04-2025_09-35-45.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>El Duque del Dragón Blanco: Pendragon </h2>
+<h2>El Duque del Dragón Blanco: Pendragon (White Dragon Duke: Pendragon)</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info">🌀▹Manhwa: El Duque del Dragón Blanco: Pendragon <br/>🌀▹Autor: Kim Hyungjun<br/>🌀▹Artista: Redice Studio<br/>🌀▹Estado: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a> (131)<br/>🌀▹Género: Acción, Aventura, Fantasía, Demonios, Romance, Harem, Sobrenatural, Tragedia, Venganza <br/>🌀▹Fansubs: Olympus Scanlation | Mango Scan<br/><br/>🌀▹Sinopsis: Nacido como el sucesor de una familia noble de clase baja, Raven Varte carga el pecado de conspirar una rebelión contra el imperio. Para que le otorgaran amnistía, fue enviado a pelear contra los demonios junto con el peor grupo del imperio, “Los cazadores de demonios”. La mayoría dice que es un lugar donde la mayoría no sobreviviría ni un año, pero Raven de alguna forma se las arreglo para sobrevivir por 10 años. Cuando su amnistía estaba frente a sus ojos, en su ultimo campo de batalla, el conoció al “sucesor” de la casa de Duques Pendragon, Ellen Pendragon.<br/><br/><a href="" onclick='return ShowHashtag("El_Duque_del_Dragon_Blanco_Pendragon")'>#El_Duque_del_Dragon_Blanco_Pendragon</a></div>
+<div class="original-info">🌀▹Manhwa: El Duque del Dragón Blanco: Pendragon<br/>(White Dragon Duke: Pendragon) <br/><br/>🌀▹Autor: Kim Hyungjun<br/>🌀▹Artista: Redice Studio<br/>🌀▹Estado: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a> (131)<br/>🌀▹Género: Acción, Aventura, Fantasía, Demonios, Romance, Harem, Sobrenatural, Tragedia, Venganza <br/>🌀▹Fansubs: Olympus Scanlation | Mango Scan<br/><br/>🌀▹Sinopsis: Nacido como el sucesor de una familia noble de clase baja, Raven Varte carga el pecado de conspirar una rebelión contra el imperio. Para que le otorgaran amnistía, fue enviado a pelear contra los demonios junto con el peor grupo del imperio, “Los cazadores de demonios”. La mayoría dice que es un lugar donde la mayoría no sobreviviría ni un año, pero Raven de alguna forma se las arreglo para sobrevivir por 10 años. Cuando su amnistía estaba frente a sus ojos, en su ultimo campo de batalla, el conoció al “sucesor” de la casa de Duques Pendragon, Ellen Pendragon.<br/><br/><a href="" onclick='return ShowHashtag("El_Duque_del_Dragon_Blanco_Pendragon")'>#El_Duque_del_Dragon_Blanco_Pendragon</a></div>
 </details>
 </div>
 </article>
@@ -1506,19 +1474,24 @@
 <div class="cover-box"><a class="cover-link" href="photos/photo_192@30-04-2025_10-18-46.jpg" target="_blank"><img alt="Solo Leveling ⇨ARCOS: 21/21 ⇨Capítulos: 179/179 ⇨Formato: Pdf ⇨Genero: Acción, Superpoderes,Fantasía, Romance, Artes marciales ⇨Idioma: Español ⇨Sinopsis: Hace 10 años, después de " class="cover" src="photos/photo_192@30-04-2025_10-18-46.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Solo Leveling </h2>
+<h2>Solo Leveling ⇨ARCOS: 21/21 ⇨Capítulos: 179/179 ⇨Formato: Pdf ⇨Genero: Acción, Superpoderes,Fantasía, Romance, Artes marciales ⇨Idioma: Español ⇨Sinopsis: Hace 10 años, después de </h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">179/179</span></div>
 <details>
 <summary>Ver información relacionada</summary>
-<div class="original-info">✔️<strong>Nombre:</strong> <strong> Solo Leveling </strong>
-<br/>  
-<br/>✔️<strong>Tipo:</strong> Manwha
-<br/>✔️<strong>Géneros:</strong> Acción, Superpoderes, Fantasía, Romance, Artes marciales
-<br/>✔️<strong>Capítulos:</strong> 179
-<br/>💮<strong>Sinopsis:</strong> 
-<br/>Hace 10 años, después de que "La Puerta" que conectaba el mundo real con el mundo de los monstruos se abriera, algunas de las personas recibieron el poder de cazar los monstruos que vivían al otro lado de esta. Se les conoce como "cazadores". Sin embargo, no todos los cazadores son poderosos.Sung Jin-Woo, un cazador de rango E, es alguien que tiene que arriesgar su vida en humildes calabozos,lo llaman el "más débil del mundo"...
-<br/>
-<br/><a href="" onclick='return ShowHashtag("Solo_Leveling")'>#Solo_Leveling</a></div>
+<div class="original-info"><a href="" onclick='return ShowHashtag("Solo_Leveling")'>#Solo_Leveling</a><br/><a href="" onclick='return ShowHashtag("Solo_Leveling_Arcs")'>#Solo_Leveling_Arcs</a><br/><br/>⇨MANHWA: Solo Leveling<br/><br/>⇨ARCOS: 21/21<br/><br/>⇨Capítulos: 179/179<br/><br/>⇨Formato: Pdf<br/><br/>⇨Genero: Acción, Superpoderes,Fantasía, Romance, Artes marciales<br/><br/>⇨Idioma: Español<br/><br/>⇨Sinopsis:<br/><br/>Hace 10 años, después de que "La Puerta" que conectaba el mundo real con el mundo de los monstruos se abriera, algunas de las personas recibieron el poder de cazar los monstruos que vivían al otro lado de esta. Se les conoce como "cazadores". Sin embargo, no todos los cazadores son poderosos.Sung Jin-Woo, un cazador de rango E, es alguien que tiene que arriesgar su vida en humildes calabozos,lo llaman el "más débil del mundo"...<br/><br/>⇨Estado: FINALIZADO ✅</div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name="solo_leveling_arcs" data-status="finalizado" data-type="sin tipo">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>Solo_Leveling_Arcs</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info"><a href="" onclick='return ShowHashtag("Solo_Leveling_Arcs")'>#Solo_Leveling_Arcs</a><br/>FINALIZADO✅<br/><br/>Y así esta historia resumiendo varias cosas, omitiendo otras, pausando por problemas de salud del dibujante, entre otras pudo llegar a su fin.</div>
 </details>
 </div>
 </article>
@@ -1536,12 +1509,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="héroe basura de clase fff / fff-class trashero" data-status="" data-type="manwha">
+<article class="catalog-card" data-name="héroe basura de clase fff / fff-class trashero" data-status="" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_195@17-05-2025_15-28-55.jpg" target="_blank"><img alt="Héroe Basura De Clase FFF / FFF-Class Trashero" class="cover" src="photos/photo_195@17-05-2025_15-28-55.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Héroe Basura De Clase FFF / FFF-Class Trashero</h2>
-<div class="chips"><span class="chip type">Manwha</span><span class="chip chapters">172</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">172</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🔸Nombre: Héroe Basura De Clase FFF / FFF-Class Trashero<br/>🔸Género: Acción, Aventura, Demonios, Fantasia, Magia, Reencarnación, Harem.<br/>🔸Autor: Farnar, Kkangmu.<br/>🔸Artistas: Kkangmu.<br/>🔸Capítulos: 172<br/>🔸Fansubs: Mango Scan, Scavenger Scan, Fusion Scanlation.<br/><br/>🔸Descripción: Kin Han Soo mató al Rey Demonio después de 10 años de ser invocado a un mundo de fantasía. Ahora es tiempo de regresar a la tierra. ¿Qué es esto? El dios del mundo de fantasía aparece al lado de su estado, porque destruyó a todos los obstáculos que le prevenían matar al Rey Demonio, la puntuación de su personalidad fue una F. El problema ahora es que debe regresar y volver a empezar de nuevo. ¿Podrá Kang Hang Soo terminar este regreso infinito?<br/><br/><a href="" onclick='return ShowHashtag("Héroe_Basura_De_Clase_FFF")'>#Héroe_Basura_De_Clase_FFF</a></div>
@@ -1549,12 +1522,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="#arte 🖋" data-status="finalizado" data-type="manga">
+<article class="catalog-card" data-name="#arte 🖋" data-status="finalizado" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_196@14-06-2025_13-26-27.jpg" target="_blank"><img alt="#Arte 🖋" class="cover" src="photos/photo_196@14-06-2025_13-26-27.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>#Arte 🖋</h2>
-<div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">104/104</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span><span class="chip chapters">104/104</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🎨 Título: <a href="" onclick='return ShowHashtag("Arte")'>#Arte</a><br/>🖋 Autor(a): Kei Ohkubo<br/>📘 Formato: PDF<br/>📜 Idioma: Español<br/>📚 Capítulos: 104/104<br/>📌 Estado: <a href="" onclick='return ShowHashtag("Finalizados")'>#Finalizados</a><br/>🎭 Género: Drama, Historia, Romance<br/>✨ Fansub: Kings Slayers Fansub<br/><br/>🌟 Sinopsis:<br/>En Florencia, siglo XVI 🌸, cuna del renacimiento 🎨, una joven noble sueña con ser artista. En una época donde las mujeres enfrentan innumerables limitaciones 🕊, Arte lucha con trabajo duro y una actitud positiva 🌟 para superar las barreras y alcanzar su sueño.</div>
@@ -1614,12 +1587,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="invencible." data-status="finalizado" data-type="comic">
+<article class="catalog-card" data-name="invencible." data-status="finalizado" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_201@17-06-2025_23-08-09.jpg" target="_blank"><img alt="Invencible." class="cover" src="photos/photo_201@17-06-2025_23-08-09.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Invencible.</h2>
-<div class="chips"><span class="chip type">Comic</span><span class="chip status">Finalizado</span><span class="chip chapters">144</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span><span class="chip chapters">144</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">❗️💥 Contenido Exclusivo 💥❗️<br/><br/>🈶Titulo: Invencible. <br/>✅ Tipo: <a href="" onclick='return ShowHashtag("Comic")'>#Comic</a> <a href="" onclick='return ShowHashtag("Invencible")'>#Invencible</a><br/>✅ Estado: <a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a>✅<br/>✅ Géneros: <a href="" onclick='return ShowHashtag("Acción")'>#Acción</a>, <a href="" onclick='return ShowHashtag("Ciencia_Ficción")'>#Ciencia_Ficción</a> <a href="" onclick='return ShowHashtag("Drama")'>#Drama</a> <a href="" onclick='return ShowHashtag("Horror")'>#Horror</a> <a href="" onclick='return ShowHashtag("Romance")'>#Romance</a> <a href="" onclick='return ShowHashtag("Superhéroes")'>#Superhéroes</a> <a href="" onclick='return ShowHashtag("Superpoderes")'>#Superpoderes</a><br/>✅ Autor: Robert Kirkman.<br/>✅ Artistas: Ryan Ottley (Ilustrador), Cory Walker (Dibujo, Tinta), Cliff Rathburn, Jason Howard, FCO Plascencia, Bill Crabtree (Color). <br/>✅ Año: <a href="" onclick='return ShowHashtag("Año_2003")'>#Año_2003</a>.<br/>✅ Volúmenes: 25<br/>✅ Capítulos: 144<br/>✅Editorial: ImageComics. <br/>✅ Sentido de Lectura📖: Occidental➡️ [Izquierda a Derecha].<br/>📛⚜️Sinopsis...<br/>Mark Grayson es como casi todos los demás jóvenes de su edad. Está en el último año de un instituto americano normal. Tiene un trabajo de mierda a tiempo parcial después de la escuela y los fines de semana. Le gustan bastante las chicas, pero no las entiende del todo. Le gusta salir con sus amigos y dormir hasta tarde los sábados. La única diferencia entre Mark y los demás es que...<br/><br/> <a href="" onclick='return ShowHashtag("Invencible")'>#Invencible</a></div>
@@ -2550,6 +2523,32 @@
 </div>
 </article>
 
+<article class="catalog-card" data-name="estimados... por los siguientes días se cambiara el canal a privado, esto debido a que telegram ha tenido algunos movimientos y andan cerrado en varios lados..." data-status="" data-type="sin tipo">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>estimados... por los siguientes días se cambiara el canal a privado, esto debido a que Telegram ha tenido algunos movimientos y andan cerrado en varios lados...</h2>
+<div class="chips"><span class="chip type">Sin tipo</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">estimados... por los siguientes días se cambiara el canal a privado, esto debido a que Telegram ha tenido algunos movimientos y andan cerrado en varios lados... <br/><br/>gracias a todos</div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name='no es un cambio "físico" me refiero a la forma en que pudieron entrar a este canal... de momento no se aceptarían nuevos miembros...ese sería el cambio más grande...' data-status="" data-type="sin tipo">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>no es un cambio "físico" me refiero a la forma en que pudieron entrar a este canal... de momento no se aceptarían nuevos miembros...ese sería el cambio más grande...</h2>
+<div class="chips"><span class="chip type">Sin tipo</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">no es un cambio "físico" me refiero a la forma en que pudieron entrar a este canal... de momento no se aceptarían nuevos miembros...ese sería el cambio más grande... <br/><br/>de momento todo sigue igual acá y si no hay complicaciones adicionales se continúan las actualizaciones...</div>
+</details>
+</div>
+</article>
+
 <article class="catalog-card" data-name="la tienda de eunhye" data-status="finalizado" data-type="pornhwa">
 <div class="cover-box"><a class="cover-link" href="photos/photo_395@07-03-2026_13-23-45.jpg" target="_blank"><img alt="La Tienda De Eunhye" class="cover" src="photos/photo_395@07-03-2026_13-23-45.jpg"/></a></div>
 <div class="card-content">
@@ -2719,11 +2718,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="en realidad, yo era la verdadera" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_425@13-03-2026_03-19-10.jpg" target="_blank"><img alt="En Realidad, Yo Era La Verdadera" class="cover" src="photos/photo_425@13-03-2026_03-19-10.jpg"/></a></div>
+<article class="catalog-card" data-name="en realidad, yo era la verdadera / actually, i was the real one / 사실은내가 진짜였다 autora: sam-wol" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_425@13-03-2026_03-19-10.jpg" target="_blank"><img alt="En Realidad, Yo Era La Verdadera / Actually, I Was the Real One / 사실은내가 진짜였다 Autora: Sam-Wol" class="cover" src="photos/photo_425@13-03-2026_03-19-10.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>En Realidad, Yo Era La Verdadera</h2>
+<h2>En Realidad, Yo Era La Verdadera / Actually, I Was the Real One / 사실은내가 진짜였다 Autora: Sam-Wol</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">160/160</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2732,11 +2731,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="noche caótica" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_432@13-03-2026_03-30-42.jpg" target="_blank"><img alt="Noche Caótica" class="cover" src="photos/photo_432@13-03-2026_03-30-42.jpg"/></a></div>
+<article class="catalog-card" data-name="noche caótica / chaotic nights / 폭야(暴夜)" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_432@13-03-2026_03-30-42.jpg" target="_blank"><img alt="Noche Caótica / Chaotic Nights / 폭야(暴夜)" class="cover" src="photos/photo_432@13-03-2026_03-30-42.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Noche Caótica</h2>
+<h2>Noche Caótica / Chaotic Nights / 폭야(暴夜)</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">96/96</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2810,11 +2809,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="el nigromante sin límites" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_450@14-03-2026_16-01-21.jpg" target="_blank"><img alt="El Nigromante Sin Límites" class="cover" src="photos/photo_450@14-03-2026_16-01-21.jpg"/></a></div>
+<article class="catalog-card" data-name="el nigromante sin límites | boundless necromancer | boundless ascension" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_450@14-03-2026_16-01-21.jpg" target="_blank"><img alt="El Nigromante Sin Límites | BoundLess Necromancer | Boundless Ascension" class="cover" src="photos/photo_450@14-03-2026_16-01-21.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>El Nigromante Sin Límites</h2>
+<h2>El Nigromante Sin Límites | BoundLess Necromancer | Boundless Ascension</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(177)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2823,11 +2822,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="fumetsu no anata e (to your eternity)" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_455@15-03-2026_19-38-13.jpg" target="_blank"><img alt="Fumetsu no Anata E (To Your Eternity)" class="cover" src="photos/photo_455@15-03-2026_19-38-13.jpg"/></a></div>
+<article class="catalog-card" data-name="fumetsu no anata e (to your eternity - 不滅のあなたへ)" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_455@15-03-2026_19-38-13.jpg" target="_blank"><img alt="Fumetsu no Anata E (To Your Eternity - 不滅のあなたへ)" class="cover" src="photos/photo_455@15-03-2026_19-38-13.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Fumetsu no Anata E (To Your Eternity)</h2>
+<h2>Fumetsu no Anata E (To Your Eternity - 不滅のあなたへ)</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">201</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2849,11 +2848,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="summer time render" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_457@15-03-2026_19-38-14.jpg" target="_blank"><img alt="Summer Time Render" class="cover" src="photos/photo_457@15-03-2026_19-38-14.jpg"/></a></div>
+<article class="catalog-card" data-name="summer time render | summertime render | summertime rendering" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_457@15-03-2026_19-38-14.jpg" target="_blank"><img alt="Summer Time Render | Summertime Render | Summertime Rendering" class="cover" src="photos/photo_457@15-03-2026_19-38-14.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Summer Time Render</h2>
+<h2>Summer Time Render | Summertime Render | Summertime Rendering</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(139/139)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2862,11 +2861,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="astro royale" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_458@15-03-2026_19-38-15.jpg" target="_blank"><img alt="Astro Royale" class="cover" src="photos/photo_458@15-03-2026_19-38-15.jpg"/></a></div>
+<article class="catalog-card" data-name="negai no astro | astro royale" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_458@15-03-2026_19-38-15.jpg" target="_blank"><img alt="Negai no Astro | Astro Royale" class="cover" src="photos/photo_458@15-03-2026_19-38-15.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Astro Royale</h2>
+<h2>Negai no Astro | Astro Royale</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(50/50)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2888,6 +2887,19 @@
 </div>
 </article>
 
+<article class="catalog-card" data-name="mañana se continúa con más contenido... recuerden apoyando con estrellas o pueden pedir informes por el contenido disponible a la venta..." data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_460@15-03-2026_21-27-30.jpg" target="_blank"><img alt="mañana se continúa con más contenido... recuerden apoyando con estrellas o pueden pedir informes por el contenido disponible a la venta..." class="cover" src="photos/photo_460@15-03-2026_21-27-30.jpg"/></a></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>mañana se continúa con más contenido... recuerden apoyando con estrellas o pueden pedir informes por el contenido disponible a la venta...</h2>
+<div class="chips"><span class="chip type">Sin tipo</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">mañana se continúa con más contenido... recuerden apoyando con estrellas o pueden pedir informes por el contenido disponible a la venta...</div>
+</details>
+</div>
+</article>
+
 <article class="catalog-card" data-name="corredores de altura" data-status="finalizado" data-type="pornhwa">
 <div class="cover-box"><a class="cover-link" href="photos/photo_463@16-03-2026_14-48-34.jpg" target="_blank"><img alt="Corredores De Altura" class="cover" src="photos/photo_463@16-03-2026_14-48-34.jpg"/></a></div>
 <div class="card-content">
@@ -2901,11 +2913,24 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="gesen no kanojo | the girl in the arcade" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_480@21-03-2026_13-19-32.jpg" target="_blank"><img alt="Gesen No Kanojo | The Girl In The Arcade" class="cover" src="photos/photo_480@21-03-2026_13-19-32.jpg"/></a></div>
+<article class="catalog-card" data-name="no sé olviden de donar para poder seguir con este proyecto..." data-status="" data-type="sin tipo">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Gesen No Kanojo | The Girl In The Arcade</h2>
+<h2>No sé olviden de donar para poder seguir con este proyecto...</h2>
+<div class="chips"><span class="chip type">Sin tipo</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">No sé olviden de donar para poder seguir con este proyecto...<br/><br/>PD. saludos y recuerden que las actualizaciones son regularmente los fines de semana</div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name="gesen no kanojo | the girl in the arcade | la chica del arcade" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_480@21-03-2026_13-19-32.jpg" target="_blank"><img alt="Gesen No Kanojo | The Girl In The Arcade | La Chica Del Arcade" class="cover" src="photos/photo_480@21-03-2026_13-19-32.jpg"/></a></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>Gesen No Kanojo | The Girl In The Arcade | La Chica Del Arcade</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(27/27)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2914,11 +2939,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="seihantai na kimi to boku [tu y yo somos polos opuestos]" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_483@21-03-2026_13-19-32.jpg" target="_blank"><img alt="Seihantai na Kimi to Boku [Tu y yo somos polos opuestos]" class="cover" src="photos/photo_483@21-03-2026_13-19-32.jpg"/></a></div>
+<article class="catalog-card" data-name="seihantai na kimi to boku (you and i are polar opposites) [tu y yo somos polos opuestos]" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_483@21-03-2026_13-19-32.jpg" target="_blank"><img alt="Seihantai na Kimi to Boku (You and I are Polar Opposites) [Tu y yo somos polos opuestos]" class="cover" src="photos/photo_483@21-03-2026_13-19-32.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Seihantai na Kimi to Boku [Tu y yo somos polos opuestos]</h2>
+<h2>Seihantai na Kimi to Boku (You and I are Polar Opposites) [Tu y yo somos polos opuestos]</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(35/65)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2927,11 +2952,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="la utilidad de un amigo de la infancia" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_484@21-03-2026_13-19-32.jpg" target="_blank"><img alt="La Utilidad de un Amigo de la Infancia" class="cover" src="photos/photo_484@21-03-2026_13-19-32.jpg"/></a></div>
+<article class="catalog-card" data-name="la utilidad de un amigo de la infancia | usefulness of a childhood friend | 소꿉친구의 쓸모" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_484@21-03-2026_13-19-32.jpg" target="_blank"><img alt="La Utilidad de un Amigo de la Infancia | Usefulness Of A Childhood Friend | 소꿉친구의 쓸모" class="cover" src="photos/photo_484@21-03-2026_13-19-32.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>La Utilidad de un Amigo de la Infancia</h2>
+<h2>La Utilidad de un Amigo de la Infancia | Usefulness Of A Childhood Friend | 소꿉친구의 쓸모</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(35/35)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2940,11 +2965,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="odalisca" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_485@21-03-2026_13-19-32.jpg" target="_blank"><img alt="Odalisca" class="cover" src="photos/photo_485@21-03-2026_13-19-32.jpg"/></a></div>
+<article class="catalog-card" data-name="odalisca | odalisque | odaliska" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_485@21-03-2026_13-19-32.jpg" target="_blank"><img alt="Odalisca | Odalisque | Odaliska" class="cover" src="photos/photo_485@21-03-2026_13-19-32.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Odalisca</h2>
+<h2>Odalisca | Odalisque | Odaliska</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(68/68)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2953,11 +2978,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="cheeky brat" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_488@21-03-2026_13-19-33.jpg" target="_blank"><img alt="Cheeky Brat" class="cover" src="photos/photo_488@21-03-2026_13-19-33.jpg"/></a></div>
+<article class="catalog-card" data-name="namaikizakari | cheeky brat" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_488@21-03-2026_13-19-33.jpg" target="_blank"><img alt="Namaikizakari | Cheeky Brat" class="cover" src="photos/photo_488@21-03-2026_13-19-33.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Cheeky Brat</h2>
+<h2>Namaikizakari | Cheeky Brat</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(137/137)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2979,11 +3004,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="hantsu x torasshu" data-status="" data-type="sin tipo">
-<div class="cover-box"><a class="cover-link" href="photos/photo_495@22-03-2026_15-07-03.jpg" target="_blank"><img alt="Hantsu x Torasshu" class="cover" src="photos/photo_495@22-03-2026_15-07-03.jpg"/></a></div>
+<article class="catalog-card" data-name="hantsu x torasshu ✈ géneros: comedia, ecchi, romance, harem, escolar ✈" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_495@22-03-2026_15-07-03.jpg" target="_blank"><img alt="Hantsu x Torasshu ✈ Géneros: Comedia, Ecchi, Romance, Harem, Escolar ✈" class="cover" src="photos/photo_495@22-03-2026_15-07-03.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Hantsu x Torasshu</h2>
+<h2>Hantsu x Torasshu ✈ Géneros: Comedia, Ecchi, Romance, Harem, Escolar ✈</h2>
 <div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">(199/199)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -2992,11 +3017,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="saotome senshu hitakakusu" data-status="" data-type="sin tipo">
-<div class="cover-box"><a class="cover-link" href="photos/photo_496@22-03-2026_15-07-04.jpg" target="_blank"><img alt="Saotome Senshu Hitakakusu" class="cover" src="photos/photo_496@22-03-2026_15-07-04.jpg"/></a></div>
+<article class="catalog-card" data-name="saotome senshu hitakakusu ✈ géneros: comedia, ecchi, romance, escolar, deportes ✈" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_496@22-03-2026_15-07-04.jpg" target="_blank"><img alt="Saotome Senshu Hitakakusu ✈ Géneros: Comedia, Ecchi, Romance, Escolar, Deportes ✈" class="cover" src="photos/photo_496@22-03-2026_15-07-04.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Saotome Senshu Hitakakusu</h2>
+<h2>Saotome Senshu Hitakakusu ✈ Géneros: Comedia, Ecchi, Romance, Escolar, Deportes ✈</h2>
 <div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">(124/124)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3005,11 +3030,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="#fire_punch" data-status="" data-type="sin tipo">
-<div class="cover-box"><a class="cover-link" href="photos/photo_497@22-03-2026_15-07-05.jpg" target="_blank"><img alt="#Fire_Punch" class="cover" src="photos/photo_497@22-03-2026_15-07-05.jpg"/></a></div>
+<article class="catalog-card" data-name="#fire_punch ✈ géneros: acción, drama, misterio, psicológico, sobrenatural ✈" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_497@22-03-2026_15-07-05.jpg" target="_blank"><img alt="#Fire_Punch ✈ Géneros: Acción, Drama, Misterio, Psicológico, Sobrenatural ✈" class="cover" src="photos/photo_497@22-03-2026_15-07-05.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>#Fire_Punch</h2>
+<h2>#Fire_Punch ✈ Géneros: Acción, Drama, Misterio, Psicológico, Sobrenatural ✈</h2>
 <div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">(83/83)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3070,11 +3095,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="futarijime romantic" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_535@28-03-2026_18-59-42.jpg" target="_blank"><img alt="Futarijime Romantic" class="cover" src="photos/photo_535@28-03-2026_18-59-42.jpg"/></a></div>
+<article class="catalog-card" data-name="futarijime romantic (ふたりじめロマンチック)" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_535@28-03-2026_18-59-42.jpg" target="_blank"><img alt="Futarijime Romantic (ふたりじめロマンチック)" class="cover" src="photos/photo_535@28-03-2026_18-59-42.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Futarijime Romantic</h2>
+<h2>Futarijime Romantic (ふたりじめロマンチック)</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(13/13)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3083,11 +3108,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="fullmetal alchemist" data-status="" data-type="sin tipo">
-<div class="cover-box"><a class="cover-link" href="photos/photo_538@28-03-2026_18-59-42.jpg" target="_blank"><img alt="Fullmetal Alchemist" class="cover" src="photos/photo_538@28-03-2026_18-59-42.jpg"/></a></div>
+<article class="catalog-card" data-name="fullmetal alchemist | full metal alchemist | hagane no renkinjutsushi | hagaren | fma | fmab" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_538@28-03-2026_18-59-42.jpg" target="_blank"><img alt="Fullmetal Alchemist | Full Metal Alchemist | Hagane no Renkinjutsushi | Hagaren | FMA | FMAB" class="cover" src="photos/photo_538@28-03-2026_18-59-42.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Fullmetal Alchemist</h2>
+<h2>Fullmetal Alchemist | Full Metal Alchemist | Hagane no Renkinjutsushi | Hagaren | FMA | FMAB</h2>
 <div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">108</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3096,11 +3121,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="overlord" data-status="" data-type="sin tipo">
-<div class="cover-box"><a class="cover-link" href="photos/photo_539@28-03-2026_18-59-43.jpg" target="_blank"><img alt="Overlord" class="cover" src="photos/photo_539@28-03-2026_18-59-43.jpg"/></a></div>
+<article class="catalog-card" data-name="overlord | over lord" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_539@28-03-2026_18-59-43.jpg" target="_blank"><img alt="Overlord | Over Lord" class="cover" src="photos/photo_539@28-03-2026_18-59-43.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Overlord</h2>
+<h2>Overlord | Over Lord</h2>
 <div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">78</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3135,11 +3160,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="sake to tobacco no hiyatoi dungeon" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_556@06-04-2026_08-02-58.jpg" target="_blank"><img alt="Sake To Tobacco No Hiyatoi Dungeon" class="cover" src="photos/photo_556@06-04-2026_08-02-58.jpg"/></a></div>
+<article class="catalog-card" data-name="sake to tobacco no hiyatoi dungeon | jornada de alcohol y cigarros en la mazmorra" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_556@06-04-2026_08-02-58.jpg" target="_blank"><img alt="Sake To Tobacco No Hiyatoi Dungeon | Jornada De Alcohol Y Cigarros En La Mazmorra" class="cover" src="photos/photo_556@06-04-2026_08-02-58.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Sake To Tobacco No Hiyatoi Dungeon</h2>
+<h2>Sake To Tobacco No Hiyatoi Dungeon | Jornada De Alcohol Y Cigarros En La Mazmorra</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">(13/13)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3213,11 +3238,37 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="seoul station necromancer" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_601@18-04-2026_00-25-49.jpg" target="_blank"><img alt="Seoul Station Necromancer" class="cover" src="photos/photo_601@18-04-2026_00-25-49.jpg"/></a></div>
+<article class="catalog-card" data-name="waifu" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_580@08-04-2026_15-30-48.jpg" target="_blank"><img alt="Waifu" class="cover" src="photos/photo_580@08-04-2026_15-30-48.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Seoul Station Necromancer</h2>
+<h2>Waifu</h2>
+<div class="chips"><span class="chip type">Sin tipo</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info"><a href="" onclick='return ShowHashtag("Waifu")'>#Waifu</a> <a href="" onclick='return ShowHashtag("Ecchi")'>#Ecchi</a> <a href="" onclick='return ShowHashtag("SexyAnime")'>#SexyAnime</a> <a href="" onclick='return ShowHashtag("AnimeGirls")'>#AnimeGirls</a> <a href="" onclick='return ShowHashtag("DigitalArt")'>#DigitalArt</a><br/><br/>Si esta publicación alcanza varias reacciones (likes, estrellas o comentarios), subiré las siguientes sin costo adicional.<br/><br/>💫 🔥 ¡Ayúdenme los que puedan con estrellas!  💫 🔥</div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name="¡@k0nm1n_n te está invitando a sacar la tarjeta de crédito stori!" data-status="" data-type="sin tipo">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>¡@K0nm1n_n te está invitando a sacar la tarjeta de crédito Stori!</h2>
+<div class="chips"><span class="chip type">Sin tipo</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">¡<a href="https://t.me/K0nm1n_n">@K0nm1n_n</a> te está invitando a sacar la tarjeta de crédito Stori!  <br/>Con su invitación podrás recibir hasta 25% más en tu línea de crédito.<br/><br/>Disfruta de beneficios como:<br/> ✅ Respaldo Mastercard<br/> ✅ Sin Anualidad<br/> ✅ Meses sin Intereses<br/><br/>Solicítala aquí 👉🏻 <br/><br/><a href="https://storicard.onelink.me/uu1Y/i16o1zu5">https://storicard.onelink.me/uu1Y/i16o1zu5</a><br/><br/>¡Elige ganar! 💚</div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name="seoul station necromancer | el nigromante de seúl" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_601@18-04-2026_00-25-49.jpg" target="_blank"><img alt="Seoul Station Necromancer | El Nigromante de Seúl" class="cover" src="photos/photo_601@18-04-2026_00-25-49.jpg"/></a></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>Seoul Station Necromancer | El Nigromante de Seúl</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">207</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3265,11 +3316,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="¡robé el alma del ranker número uno!" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_611@22-04-2026_23-46-06.jpg" target="_blank"><img alt="¡Robé el Alma del Ranker Número Uno!" class="cover" src="photos/photo_611@22-04-2026_23-46-06.jpg"/></a></div>
+<article class="catalog-card" data-name="¡robé el alma del ranker número uno! (i stole the first ranker’s soul)" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_611@22-04-2026_23-46-06.jpg" target="_blank"><img alt="¡Robé el Alma del Ranker Número Uno! (I Stole the First Ranker’s Soul)" class="cover" src="photos/photo_611@22-04-2026_23-46-06.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>¡Robé el Alma del Ranker Número Uno!</h2>
+<h2>¡Robé el Alma del Ranker Número Uno! (I Stole the First Ranker’s Soul)</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3291,11 +3342,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="hazlo por mí" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_613@23-04-2026_00-42-12.jpg" target="_blank"><img alt="Hazlo por mí" class="cover" src="photos/photo_613@23-04-2026_00-42-12.jpg"/></a></div>
+<article class="catalog-card" data-name="hazlo por mí | please do it | 해줘, 해줘" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_613@23-04-2026_00-42-12.jpg" target="_blank"><img alt="Hazlo por mí | Please Do It | 해줘, 해줘" class="cover" src="photos/photo_613@23-04-2026_00-42-12.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Hazlo por mí</h2>
+<h2>Hazlo por mí | Please Do It | 해줘, 해줘</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">65</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3304,11 +3355,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="luna nueva" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_616@24-04-2026_06-04-26.jpg" target="_blank"><img alt="Luna Nueva" class="cover" src="photos/photo_616@24-04-2026_06-04-26.jpg"/></a></div>
+<article class="catalog-card" data-name="luna nueva | new moon" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_616@24-04-2026_06-04-26.jpg" target="_blank"><img alt="Luna Nueva | New Moon" class="cover" src="photos/photo_616@24-04-2026_06-04-26.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Luna Nueva</h2>
+<h2>Luna Nueva | New Moon</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(40/40)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3317,11 +3368,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="shinkan ga xxx na no wa uriko no sei desu" data-status="finalizado" data-type="sin tipo">
-<div class="cover-box"><a class="cover-link" href="photos/photo_2026-04-01_21-50-11.jpg" target="_blank"><img alt="Shinkan ga xxx na no wa Uriko no Sei desu" class="cover" src="photos/photo_2026-04-01_21-50-11.jpg"/></a></div>
+<article class="catalog-card" data-name="la dibujante y su unico lector hombre | que mi nueva obra sea ××× es culpa de el | shinkan ga xxx na no wa uriko no sei desu" data-status="finalizado" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_617@24-04-2026_06-04-26.jpg" target="_blank"><img alt="La Dibujante y Su Unico Lector Hombre | Que Mi Nueva Obra Sea ××× Es Culpa De El | Shinkan ga xxx na no wa Uriko no Sei desu" class="cover" src="photos/photo_617@24-04-2026_06-04-26.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Shinkan ga xxx na no wa Uriko no Sei desu</h2>
+<h2>La Dibujante y Su Unico Lector Hombre | Que Mi Nueva Obra Sea ××× Es Culpa De El | Shinkan ga xxx na no wa Uriko no Sei desu</h2>
 <div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span><span class="chip chapters">(03/03)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3330,11 +3381,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="rosas y champaña" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_619@24-04-2026_06-04-26.jpg" target="_blank"><img alt="Rosas y Champaña" class="cover" src="photos/photo_619@24-04-2026_06-04-26.jpg"/></a></div>
+<article class="catalog-card" data-name="rosas y champaña | roses and champagne | 미와 샴페인 샴샴" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_619@24-04-2026_06-04-26.jpg" target="_blank"><img alt="Rosas y Champaña | Roses and Champagne | 미와 샴페인 샴샴" class="cover" src="photos/photo_619@24-04-2026_06-04-26.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Rosas y Champaña</h2>
+<h2>Rosas y Champaña | Roses and Champagne | 미와 샴페인 샴샴</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(92/92)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3356,11 +3407,24 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="cuando jasy silba" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_640@01-05-2026_17-00-58.jpg" target="_blank"><img alt="Cuando Jasy Silba" class="cover" src="photos/photo_640@01-05-2026_17-00-58.jpg"/></a></div>
+<article class="catalog-card" data-name="para aquellos que busquen contenido en emisión, les dejo el siguiente link..." data-status="en emisión" data-type="sin tipo">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Cuando Jasy Silba</h2>
+<h2>Para aquellos que busquen contenido en emisión, les dejo el siguiente link...</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">Para aquellos que busquen contenido en emisión, les dejo el siguiente link...<br/><br/>Mismo escenario, actualizaciones regulares y se atienden peticiones.<br/><br/><a href="https://t.me/+0U5fBNPvmY8zYmQ5">https://t.me/+0U5fBNPvmY8zYmQ5</a></div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name="cuando jasy silba | when jasy whistles" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_640@01-05-2026_17-00-58.jpg" target="_blank"><img alt="Cuando Jasy Silba | When Jasy Whistles" class="cover" src="photos/photo_640@01-05-2026_17-00-58.jpg"/></a></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>Cuando Jasy Silba | When Jasy Whistles</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(114/114)</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3422,7 +3486,7 @@
 </article>
 
 <article class="catalog-card" data-name="black clover" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_2024-02-20_16-43-49.jpg" target="_blank"><img alt="Black Clover" class="cover" src="photos/photo_2024-02-20_16-43-49.jpg"/></a></div>
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Black Clover</h2>
@@ -3434,15 +3498,28 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="whale star: the gyeongseong mermaid" data-status="finalizado" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_672@06-05-2026_01-14-52.jpg" target="_blank"><img alt="Whale Star: The Gyeongseong Mermaid" class="cover" src="photos/photo_672@06-05-2026_01-14-52.jpg"/></a></div>
+<article class="catalog-card" data-name="whale star: the gyeongseong mermaid / estrella ballena / 고래별: 경성의 인어공주" data-status="finalizado" data-type="manhwa">
+<div class="cover-box"><a class="cover-link" href="photos/photo_672@06-05-2026_01-14-52.jpg" target="_blank"><img alt="Whale Star: The Gyeongseong Mermaid / Estrella Ballena / 고래별: 경성의 인어공주" class="cover" src="photos/photo_672@06-05-2026_01-14-52.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Whale Star: The Gyeongseong Mermaid</h2>
+<h2>Whale Star: The Gyeongseong Mermaid / Estrella Ballena / 고래별: 경성의 인어공주</h2>
 <div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">102/102</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><blockquote>🔰⊳Manhwa: Whale Star: The Gyeongseong Mermaid / Estrella Ballena / 고래별: 경성의 인어공주</blockquote><br/><a href="" onclick='return ShowHashtag("Manhwa")'>#Manhwa</a> <a href="" onclick='return ShowHashtag("Whale_Star")'>#Whale_Star</a><br/>🔰⊳Autora: Naa Yoonhee<br/>🔰⊳Fansub: Bread Lovers Scan<br/>🔰⊳Capítulos: 102/102<br/>🔰⊳Género: Drama, Histórico, Militar, Romance<br/>🔰⊳Formato: PDF<br/>🔰⊳Estado: Finalizado<br/><blockquote>🔰⊳Sinopsis:<br/>En el año de 1926 Josen esta bajo el dominio japones. Sua Eun, una chica de 17 años que vive en la zona de Gunsan y trabaja como sirvienta en un hogar liberal pro-japones, un día encuentra al lesionado activista independiente Hui Hyun varado en la playa y decide protegerlo...</blockquote><br/><br/><a href="" onclick='return ShowHashtag("Whale_Star")'>#Whale_Star</a></div>
+</details>
+</div>
+</article>
+
+<article class="catalog-card" data-name="¡feliz día de las madres! 🎉" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_673@10-05-2026_09-36-23.jpg" target="_blank"><img alt="¡Feliz Día De Las Madres! 🎉" class="cover" src="photos/photo_673@10-05-2026_09-36-23.jpg"/></a></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
+<h2>¡Feliz Día De Las Madres! 🎉</h2>
+<div class="chips"><span class="chip type">Sin tipo</span></div>
+<details>
+<summary>Ver información relacionada</summary>
+<div class="original-info">❤️<strong>¡Feliz Día De Las Madres!</strong> 🎉<br/><br/><strong>A todas las mamás de quienes leen esto. Abrácenlas, cuídenlas y recuérdenles lo mucho que significan en sus vidas✨🫂</strong></div>
 </details>
 </div>
 </article>
@@ -3512,12 +3589,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="the beginning after the end" data-status="finalizado" data-type="novela ligera">
-<div class="cover-box"><a class="cover-link" href="photos/photo_707@20-05-2026_18-00-01.jpg" target="_blank"><img alt="The Beginning After The End" class="cover" src="photos/photo_707@20-05-2026_18-00-01.jpg"/></a></div>
+<article class="catalog-card" data-name="the beginning after the end | la vida después de la muerte | 끝이 아닌 시작" data-status="finalizado" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_707@20-05-2026_18-00-01.jpg" target="_blank"><img alt="The Beginning After The End | La Vida Después de la Muerte | 끝이 아닌 시작" class="cover" src="photos/photo_707@20-05-2026_18-00-01.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>The Beginning After The End</h2>
-<div class="chips"><span class="chip type">Novela Ligera</span><span class="chip status">Finalizado</span></div>
+<h2>The Beginning After The End | La Vida Después de la Muerte | 끝이 아닌 시작</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><strong>🈴▹Nombre:</strong> The Beginning After The End | La Vida Después de la Muerte | 끝이 아닌 시작<br/><strong>✔️▹Tipo:</strong> <a href="" onclick='return ShowHashtag("Novela")'>#Novela</a><br/><strong>✔️▹Géneros: </strong><br/>Romance • Drama<br/>Sobrenatural • Acción <br/>Aventura • Fantasía <br/><strong>✔️▹Estado:</strong> <a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a> <br/><strong>✔️▹Volúmenes:</strong> (12/12)<br/><strong>✔️▹Autor: </strong>TurtleMe<br/><strong>✔️▹Fansub:</strong> Next Novels (MTL), Novelas Ligera<br/><br/><strong>🔰▹Sinopsis: </strong><br/>El rey Grey posee una fuerza, riqueza y prestigio sin igual en un mundo gobernado por la habilidad marcial. Sin embargo, la soledad acecha a quienes ostentan un gran poder. Bajo la glamurosa apariencia de un rey poderoso se esconde el caparazón de un hombre sin propósito ni voluntad.<br/><br/>Reencarnado en un nuevo mundo lleno de magia y monstruos, el rey tiene una segunda oportunidad para revivir su vida. Sin embargo, corregir los errores de su pasado no será su único reto. Bajo la paz y la prosperidad del nuevo mundo se esconde una corriente subterránea que amenaza con destruir todo por lo que ha luchado, cuestionando su papel y la razón de su renacimiento.<br/><br/><a href="" onclick='return ShowHashtag("The_Beginning_After_The_End")'>#The_Beginning_After_The_End</a></div>
@@ -3525,12 +3602,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="kono subarashii sekai ni shukufuku wo!" data-status="finalizado" data-type="novela ligera">
-<div class="cover-box"><a class="cover-link" href="photos/photo_708@23-05-2026_13-02-20.jpg" target="_blank"><img alt="Kono Subarashii Sekai ni Shukufuku wo!" class="cover" src="photos/photo_708@23-05-2026_13-02-20.jpg"/></a></div>
+<article class="catalog-card" data-name="kono subarashii sekai ni shukufuku wo! | konosuba : god’s blessing on this wonderful world! | この素晴らしい世界に祝福を！" data-status="finalizado" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_708@23-05-2026_13-02-20.jpg" target="_blank"><img alt="Kono Subarashii Sekai ni Shukufuku wo! | Konosuba : God’s Blessing on This Wonderful World! | この素晴らしい世界に祝福を！" class="cover" src="photos/photo_708@23-05-2026_13-02-20.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Kono Subarashii Sekai ni Shukufuku wo!</h2>
-<div class="chips"><span class="chip type">Novela Ligera</span><span class="chip status">Finalizado</span></div>
+<h2>Kono Subarashii Sekai ni Shukufuku wo! | Konosuba : God’s Blessing on This Wonderful World! | この素晴らしい世界に祝福を！</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><strong>🈴▹Nombre:</strong> Kono Subarashii Sekai ni Shukufuku wo! | Konosuba : God’s Blessing on This Wonderful World! | この素晴らしい世界に祝福を！<br/><strong>✔️▹Tipo:</strong> <a href="" onclick='return ShowHashtag("Novela")'>#Novela</a><br/><a href="" onclick='return ShowHashtag("Konosuba_Novela")'>#Konosuba_Novela</a><br/><strong>✔️▹Géneros: </strong>Comedia, Romance, Ecchi, Harem, Drama, Acción, Recuentos de la Vida<br/><strong>✔️▹Estado: </strong><a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a><br/><strong>✔️▹Volúmenes: </strong>(17/17)<br/><strong>✔️▹Autor:</strong> Akatsuki Natsume, Mishima Kurone<br/><strong>✔️▹Fansub: </strong>Gustang Translations, Darkness Dragons Translation y Chunchunmaru Translations<br/><br/><strong>🔰▹Sinopsis: </strong><br/>Kazuma Satou es un introvertido al que le encantan los juegos, y su vida terminó de repente… apareciendo ante él una hermosa chica que dice ser una diosa. Kazuma, que fue transportado a otro mundo, ¡trabajó duro para ganarse la vida! Quería vivir una vida estable, pero estaba agobiado por los problemas que le causaba la diosa que trajo consigo al otro mundo. ¿¡Incluso fue atacado por el ejército del rey demonio!?<br/><br/><a href="" onclick='return ShowHashtag("Konosuba_Novela")'>#Konosuba_Novela</a></div>
@@ -3550,392 +3627,203 @@
 </details>
 </div>
 </article>
+</main><section class="validation-section" id="porValidar"><div class="section-title"><h2>Cuadros por validar (3)</h2><p>Elementos que parecen ser avisos, apoyo al canal o contenido administrativo. Quedan separados para que decidas si los eliminas.</p></div><div class="catalog-grid validation-grid"><article class="catalog-card validation-card" data-name="¿te gustaría invitarnos un café?" data-status="" data-type="sin tipo">
+<div class="cover-box"><div class="cover placeholder">Sin imagen</div></div>
+<div class="card-content">
+<div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 
-</main>
-<section class="validation-section" id="porValidar">
-  <div class="section-title">
-    <h2>Cuadros por validar</h2>
-    <p>Cuando agregues avisos o elementos administrativos, colócalos aquí para revisarlos por separado.</p>
-  </div>
-  <div class="catalog-grid validation-grid"></div>
+
+<h2>¿Te gustaría invitarnos un café?</h2>
+<div class="chips"><span class="chip type">Validar</span></div>
+<p class="validation-note">Cuadro administrativo detectado. Revisa si deseas conservarlo o eliminarlo.</p>
+</div>
+</article>
+</div>
 </section>
 
 <script>
-  /*
-    Catalogo dinamico:
-    - Calcula automaticamente tipos y estados desde las tarjetas.
-    - Ordena las tarjetas sin mover manualmente el HTML.
-    - Mantiene el boton de solicitud por WhatsApp.
-  */
-  const WHATSAPP_NUMBER = "525586006883";
-  const ADULT_TYPE_VALUE = "pornhwa";
+  (function () {
+    const WHATSAPP_NUMBER = "525586006883";
+    const SECURITY_MESSAGE = "Contenido protegido. Este catálogo fue organizado manualmente.";
 
-  function normalizeText(value) {
-    return (value || "")
-      .toString()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function prettyText(value, fallback) {
-    const text = (value || "").toString().replace(/\s+/g, " ").trim();
-    return text || fallback;
-  }
-
-  function getMainGrid() {
-    return document.getElementById("catalogGrid");
-  }
-
-  function getMainCards() {
-    const grid = getMainGrid();
-    return grid ? Array.from(grid.querySelectorAll(":scope > .catalog-card")) : [];
-  }
-
-  function getValidationCards() {
-    return Array.from(document.querySelectorAll("#porValidar .catalog-card"));
-  }
-
-  function getCardText(card, selector) {
-    const element = card.querySelector(selector);
-    return element ? element.textContent.trim().replace(/\s+/g, " ") : "";
-  }
-
-  function getCardTitle(card) {
-    return prettyText(getCardText(card, "h2"), card.dataset.name || "Sin titulo");
-  }
-
-  function getCardTypeLabel(card) {
-    return prettyText(getCardText(card, ".chip.type"), card.dataset.type || "Sin tipo");
-  }
-
-  function getCardStatusLabel(card) {
-    return prettyText(getCardText(card, ".chip.status"), card.dataset.status || "Sin estado");
-  }
-
-  function getCardType(card) {
-    return normalizeText(getCardTypeLabel(card) || "Sin tipo") || "sin tipo";
-  }
-
-  function getCardStatus(card) {
-    return normalizeText(getCardStatusLabel(card) || "Sin estado") || "sin estado";
-  }
-
-  function isAdultCard(card) {
-    return getCardType(card) === ADULT_TYPE_VALUE;
-  }
-
-  function shouldShowAdultContent() {
-    const toggle = document.getElementById("showAdultToggle");
-    return Boolean(toggle && toggle.checked);
-  }
-
-  function getCatalogCardsForPublicView(cards) {
-    return shouldShowAdultContent() ? cards : cards.filter(card => !isAdultCard(card));
-  }
-
-  function getLabelFromValue(value, cards, field) {
-    const normalized = normalizeText(value);
-    const found = cards.find(card => field === "type" ? getCardType(card) === normalized : getCardStatus(card) === normalized);
-    if (!found) return value;
-    return field === "type" ? getCardTypeLabel(found) : getCardStatusLabel(found);
-  }
-
-  function getCardChapters(card) {
-    const raw = getCardText(card, ".chip.chapters");
-    if (!raw) return -1;
-    const match = raw.replace(/,/g, "").match(/\d+/);
-    return match ? Number(match[0]) : -1;
-  }
-
-  function matchesSearch(card, query) {
-    if (!query) return true;
-    const searchableText = normalizeText([
-      card.dataset.name,
-      getCardTitle(card),
-      getCardTypeLabel(card),
-      getCardStatusLabel(card),
-      card.innerText
-    ].join(" "));
-    return searchableText.includes(query);
-  }
-
-  function matchesFilter(card, selectedType, selectedStatus) {
-    const okType = !selectedType || getCardType(card) === selectedType;
-    const okStatus = !selectedStatus || getCardStatus(card) === selectedStatus;
-    return okType && okStatus;
-  }
-
-  function countBy(cards, field) {
-    const map = new Map();
-    cards.forEach(card => {
-      const key = field === "type" ? getCardType(card) : getCardStatus(card);
-      map.set(key, (map.get(key) || 0) + 1);
-    });
-    return map;
-  }
-
-  function updateSelectOptions(select, valuesMap, selectedValue, allLabel, field, cards) {
-    if (!select) return;
-
-    const entries = Array.from(valuesMap.entries()).sort((a, b) => {
-      const labelA = getLabelFromValue(a[0], cards, field);
-      const labelB = getLabelFromValue(b[0], cards, field);
-      return labelA.localeCompare(labelB, "es", { sensitivity: "base" });
-    });
-
-    select.innerHTML = "";
-
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = allLabel;
-    select.appendChild(defaultOption);
-
-    entries.forEach(([value, count]) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = `${getLabelFromValue(value, cards, field)} (${count})`;
-      select.appendChild(option);
-    });
-
-    select.value = selectedValue && valuesMap.has(selectedValue) ? selectedValue : "";
-  }
-
-  function rebuildDynamicFilters() {
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    const cards = getMainCards();
-    const baseCards = getCatalogCardsForPublicView(cards);
-    const query = normalizeText(searchBox ? searchBox.value : "");
-    let selectedType = typeFilter ? typeFilter.value : "";
-    let selectedStatus = statusFilter ? statusFilter.value : "";
-
-    if (!shouldShowAdultContent() && selectedType === ADULT_TYPE_VALUE) {
-      selectedType = "";
-      if (typeFilter) typeFilter.value = "";
+    function normalizeText(value) {
+      return (value || "")
+        .toString()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
     }
 
-    const cardsForType = baseCards.filter(card => matchesSearch(card, query) && (!selectedStatus || getCardStatus(card) === selectedStatus));
-    const cardsForStatus = baseCards.filter(card => matchesSearch(card, query) && (!selectedType || getCardType(card) === selectedType));
+    function getCardText(card, selector) {
+      const element = card.querySelector(selector);
+      return element ? element.textContent.trim().replace(/\s+/g, " ") : "";
+    }
 
-    updateSelectOptions(typeFilter, countBy(cardsForType, "type"), selectedType, "Todos los tipos", "type", baseCards);
-    updateSelectOptions(statusFilter, countBy(cardsForStatus, "status"), selectedStatus, "Todos los estados", "status", baseCards);
-  }
+    function getMainCards() {
+      return Array.from(document.querySelectorAll("#catalogGrid .catalog-card"));
+    }
 
-  function sortCatalog() {
-    const grid = getMainGrid();
-    const sortFilter = document.getElementById("sortFilter");
-    if (!grid || !sortFilter) return;
+    function getVisibleBySearch() {
+      const searchBox = document.getElementById("searchBox");
+      const query = normalizeText(searchBox ? searchBox.value : "");
+      return getMainCards().filter(card => !query || normalizeText(card.innerText).includes(query));
+    }
 
-    const sortMode = sortFilter.value || "name-asc";
-    const cards = getMainCards();
+    function fillSelect(select, values, defaultLabel, selectedValue) {
+      if (!select) return;
+      select.innerHTML = "";
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      defaultOption.textContent = defaultLabel;
+      select.appendChild(defaultOption);
 
-    cards.sort((a, b) => {
-      const nameA = getCardTitle(a);
-      const nameB = getCardTitle(b);
-      const typeA = getCardTypeLabel(a);
-      const typeB = getCardTypeLabel(b);
-      const statusA = getCardStatusLabel(a);
-      const statusB = getCardStatusLabel(b);
-      const chaptersA = getCardChapters(a);
-      const chaptersB = getCardChapters(b);
-      const originalA = Number(a.dataset.originalOrder || 0);
-      const originalB = Number(b.dataset.originalOrder || 0);
+      values.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.value;
+        option.textContent = `${item.label} (${item.count})`;
+        select.appendChild(option);
+      });
 
-      switch (sortMode) {
-        case "name-desc":
-          return nameB.localeCompare(nameA, "es", { sensitivity: "base", numeric: true });
-        case "type-asc":
-          return typeA.localeCompare(typeB, "es", { sensitivity: "base" }) ||
-                 nameA.localeCompare(nameB, "es", { sensitivity: "base", numeric: true });
-        case "status-asc":
-          return statusA.localeCompare(statusB, "es", { sensitivity: "base" }) ||
-                 nameA.localeCompare(nameB, "es", { sensitivity: "base", numeric: true });
-        case "chapters-desc":
-          return (chaptersB - chaptersA) || nameA.localeCompare(nameB, "es", { sensitivity: "base", numeric: true });
-        case "chapters-asc":
-          return (chaptersA - chaptersB) || nameA.localeCompare(nameB, "es", { sensitivity: "base", numeric: true });
-        case "original":
-          return originalA - originalB;
-        case "name-asc":
-        default:
-          return nameA.localeCompare(nameB, "es", { sensitivity: "base", numeric: true });
+      if ([...select.options].some(option => option.value === selectedValue)) {
+        select.value = selectedValue;
       }
-    });
+    }
 
-    cards.forEach(card => grid.appendChild(card));
-  }
+    function buildOptions(cards, key, chipSelector, fallbackLabel) {
+      const map = new Map();
+      cards.forEach(card => {
+        const raw = card.dataset[key] || getCardText(card, chipSelector) || fallbackLabel;
+        const label = raw || fallbackLabel;
+        const value = normalizeText(label);
+        if (!value) return;
+        if (!map.has(value)) map.set(value, { value, label, count: 0 });
+        map.get(value).count += 1;
+      });
+      return [...map.values()].sort((a, b) => a.label.localeCompare(b.label, "es"));
+    }
 
-  function filterCatalog() {
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    const visibleCount = document.getElementById("visibleCount");
-    const totalCount = document.getElementById("totalCount");
-    const validationCount = document.getElementById("validationCount");
-    const adultHiddenCount = document.getElementById("adultHiddenCount");
-    const adultHiddenText = document.getElementById("adultHiddenText");
+    function refreshDynamicFilters() {
+      const typeFilter = document.getElementById("typeFilter");
+      const statusFilter = document.getElementById("statusFilter");
+      const selectedType = typeFilter ? typeFilter.value : "";
+      const selectedStatus = statusFilter ? statusFilter.value : "";
+      const searchCards = getVisibleBySearch();
 
-    rebuildDynamicFilters();
-    sortCatalog();
+      fillSelect(typeFilter, buildOptions(searchCards, "type", ".chip.type", "Sin tipo"), "Todos los tipos", selectedType);
+      fillSelect(statusFilter, buildOptions(searchCards, "status", ".chip.status", "Sin estado"), "Todos los estados", selectedStatus);
+    }
 
-    const query = normalizeText(searchBox ? searchBox.value : "");
-    const selectedType = typeFilter ? typeFilter.value : "";
-    const selectedStatus = statusFilter ? statusFilter.value : "";
-    const showAdult = shouldShowAdultContent();
-    const cards = getMainCards();
-    const hiddenAdultCards = cards.filter(card => isAdultCard(card)).length;
-    const publicTotal = showAdult ? cards.length : cards.length - hiddenAdultCards;
-    let visible = 0;
+    function filterCatalog() {
+      const searchBox = document.getElementById("searchBox");
+      const typeFilter = document.getElementById("typeFilter");
+      const statusFilter = document.getElementById("statusFilter");
+      const query = normalizeText(searchBox ? searchBox.value : "");
+      const selectedType = typeFilter ? typeFilter.value : "";
+      const selectedStatus = statusFilter ? statusFilter.value : "";
+      let visible = 0;
 
-    cards.forEach(card => {
-      const allowedByAdultToggle = showAdult || !isAdultCard(card);
-      const show = allowedByAdultToggle && matchesSearch(card, query) && matchesFilter(card, selectedType, selectedStatus);
-      card.style.display = show ? "" : "none";
-      if (show) visible++;
-    });
+      getMainCards().forEach(card => {
+        const cardText = normalizeText(card.innerText);
+        const cardType = normalizeText(card.dataset.type || getCardText(card, ".chip.type") || "Sin tipo");
+        const cardStatus = normalizeText(card.dataset.status || getCardText(card, ".chip.status") || "Sin estado");
+        const show = (!query || cardText.includes(query)) && (!selectedType || cardType === selectedType) && (!selectedStatus || cardStatus === selectedStatus);
+        card.style.display = show ? "" : "none";
+        if (show) visible += 1;
+      });
 
-    if (visibleCount) visibleCount.textContent = visible;
-    if (totalCount) totalCount.textContent = publicTotal;
-    if (validationCount) validationCount.textContent = getValidationCards().length;
-    if (adultHiddenCount) adultHiddenCount.textContent = showAdult ? 0 : hiddenAdultCards;
-    if (adultHiddenText) adultHiddenText.style.display = showAdult || hiddenAdultCards === 0 ? "none" : "inline";
-  }
+      const visibleCount = document.getElementById("visibleCount");
+      const totalCount = document.getElementById("totalCount");
+      const validationCount = document.getElementById("validationCount");
+      if (visibleCount) visibleCount.textContent = visible;
+      if (totalCount) totalCount.textContent = getMainCards().length;
+      if (validationCount) validationCount.textContent = document.querySelectorAll("#porValidar .catalog-card").length;
+    }
 
-  function resetFilters() {
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    const sortFilter = document.getElementById("sortFilter");
-    const showAdultToggle = document.getElementById("showAdultToggle");
+    function resetFilters() {
+      const searchBox = document.getElementById("searchBox");
+      const typeFilter = document.getElementById("typeFilter");
+      const statusFilter = document.getElementById("statusFilter");
+      if (searchBox) searchBox.value = "";
+      if (typeFilter) typeFilter.value = "";
+      if (statusFilter) statusFilter.value = "";
+      refreshDynamicFilters();
+      filterCatalog();
+    }
 
-    if (searchBox) searchBox.value = "";
-    if (typeFilter) typeFilter.value = "";
-    if (statusFilter) statusFilter.value = "";
-    if (sortFilter) sortFilter.value = "name-asc";
-    if (showAdultToggle) showAdultToggle.checked = false;
-    filterCatalog();
-  }
+    function buildWhatsappMessage(card) {
+      const title = getCardText(card, "h2") || card.dataset.name || "Título no especificado";
+      const type = getCardText(card, ".chip.type") || card.dataset.type || "No especificado";
+      const status = getCardText(card, ".chip.status") || card.dataset.status || "No especificado";
+      const chapters = getCardText(card, ".chip.chapters") || "No especificado";
+      return `Hola, quiero solicitar la descarga de:\nTítulo: ${title}\nTipo: ${type}\nEstado: ${status}\nCapítulos: ${chapters}\n\nLo vi en el catálogo web.`;
+    }
 
-  function buildWhatsappMessage(card) {
-    const title = getCardTitle(card);
-    const type = getCardTypeLabel(card);
-    const status = getCardStatusLabel(card);
-    const chapters = prettyText(getCardText(card, ".chip.chapters"), "No especificado");
-
-    return `Hola, quiero solicitar la descarga de:\n` +
-           `Titulo: ${title}\n` +
-           `Tipo: ${type}\n` +
-           `Estado: ${status}\n` +
-           `Capitulos: ${chapters}\n\n` +
-           `Lo vi en el catalogo web.`;
-  }
-
-  function initWhatsappRequestButtons() {
-    document.querySelectorAll(".catalog-card").forEach(card => {
-      const currentButton = card.querySelector(".item-num");
-      if (!currentButton) return;
-      if (currentButton.tagName === "A" && currentButton.classList.contains("request-link-ready")) return;
-
-      const link = document.createElement("a");
-      link.className = "request-link request-link-ready";
-      link.textContent = "Solicitar descarga";
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.setAttribute("aria-label", `Solicitar descarga de ${getCardTitle(card)}`);
-
-      if (!WHATSAPP_NUMBER || WHATSAPP_NUMBER === "TU_NUMERO_CON_CODIGO_DE_PAIS") {
-        link.href = "#";
-        link.addEventListener("click", function(event) {
-          event.preventDefault();
-          alert("Antes de publicar, reemplaza TU_NUMERO_CON_CODIGO_DE_PAIS dentro del archivo index.html por tu numero real de WhatsApp.");
-        });
-      } else {
+    function initWhatsappRequestButtons() {
+      document.querySelectorAll(".catalog-card").forEach(card => {
+        const currentButton = card.querySelector(".item-num");
+        if (!currentButton) return;
+        const link = document.createElement("a");
+        link.className = "request-link";
+        link.textContent = "Solicitar descarga";
         link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsappMessage(card))}`;
-      }
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        currentButton.replaceWith(link);
+      });
+    }
 
-      currentButton.replaceWith(link);
-    });
-  }
-
-  function initCatalog() {
-    const cards = getMainCards();
-    cards.forEach((card, index) => {
-      if (!card.dataset.originalOrder) card.dataset.originalOrder = String(index);
-      if (!card.dataset.name) card.dataset.name = normalizeText(getCardTitle(card));
-      if (!card.dataset.type) card.dataset.type = getCardType(card);
-      if (!card.dataset.status) card.dataset.status = getCardStatus(card);
-    });
-
-    const searchBox = document.getElementById("searchBox");
-    const typeFilter = document.getElementById("typeFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    const sortFilter = document.getElementById("sortFilter");
-    const showAdultToggle = document.getElementById("showAdultToggle");
-    const resetBtn = document.getElementById("resetBtn");
-
-    if (searchBox) searchBox.addEventListener("input", filterCatalog);
-    if (typeFilter) typeFilter.addEventListener("change", filterCatalog);
-    if (statusFilter) statusFilter.addEventListener("change", filterCatalog);
-    if (sortFilter) sortFilter.addEventListener("change", filterCatalog);
-    if (showAdultToggle) showAdultToggle.addEventListener("change", filterCatalog);
-    if (resetBtn) resetBtn.addEventListener("click", resetFilters);
-
-    initWhatsappRequestButtons();
-    filterCatalog();
-  }
-
-  document.addEventListener("DOMContentLoaded", initCatalog);
-</script>
-
-<script>
-  (function () {
-    const securityMessage = "Contenido protegido. Este catálogo fue organizado manualmente.";
-
-    document.addEventListener("contextmenu", function (event) {
-      event.preventDefault();
-      alert(securityMessage);
-    });
-
-    document.addEventListener("keydown", function (event) {
-      const key = event.key.toLowerCase();
-      if (
-        key === "f12" ||
-        (event.ctrlKey && event.shiftKey && ["i", "j", "c"].includes(key)) ||
-        (event.ctrlKey && key === "u") ||
-        (event.ctrlKey && key === "s") ||
-        (event.ctrlKey && key === "p")
-      ) {
+    function initSecurityBarriers() {
+      document.addEventListener("contextmenu", function (event) {
         event.preventDefault();
-        event.stopPropagation();
-        alert(securityMessage);
-        return false;
-      }
-    });
+        alert(SECURITY_MESSAGE);
+      });
 
-    document.addEventListener("dragstart", function (event) {
-      if (event.target.tagName === "IMG") event.preventDefault();
-    });
+      document.addEventListener("keydown", function (event) {
+        const key = (event.key || "").toLowerCase();
+        const blocked =
+          key === "f12" ||
+          (event.ctrlKey && event.shiftKey && ["i", "j", "c"].includes(key)) ||
+          (event.ctrlKey && ["u", "s", "p"].includes(key));
 
-    document.addEventListener("selectstart", function (event) {
-      if (!event.target.closest("input, textarea, select, button, summary, details")) {
+        if (blocked) {
+          event.preventDefault();
+          event.stopPropagation();
+          alert(SECURITY_MESSAGE);
+          return false;
+        }
+      }, true);
+
+      document.addEventListener("dragstart", function (event) {
+        if (event.target && event.target.tagName === "IMG") event.preventDefault();
+      });
+
+      document.addEventListener("copy", function (event) {
         event.preventDefault();
-      }
+        alert(SECURITY_MESSAGE);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const searchBox = document.getElementById("searchBox");
+      const typeFilter = document.getElementById("typeFilter");
+      const statusFilter = document.getElementById("statusFilter");
+      const resetBtn = document.getElementById("resetBtn");
+
+      initWhatsappRequestButtons();
+      initSecurityBarriers();
+      refreshDynamicFilters();
+      filterCatalog();
+
+      if (searchBox) searchBox.addEventListener("input", function () { refreshDynamicFilters(); filterCatalog(); });
+      if (typeFilter) typeFilter.addEventListener("change", filterCatalog);
+      if (statusFilter) statusFilter.addEventListener("change", filterCatalog);
+      if (resetBtn) resetBtn.addEventListener("click", resetFilters);
     });
 
-    document.addEventListener("copy", function (event) {
-      event.preventDefault();
-      alert(securityMessage);
-    });
+    window.filterCatalog = filterCatalog;
+    window.resetFilters = resetFilters;
   })();
 </script>
-
-<footer class="catalog-footer">
-  Catálogo organizado por K0NM1N-N · Versión web para consulta
-</footer>
-
 </body>
 </html>

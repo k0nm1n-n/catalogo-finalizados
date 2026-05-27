@@ -15,7 +15,7 @@
     .catalog-header { position:sticky; top:0; z-index:10; background:rgba(15,17,23,.96); border-bottom:1px solid var(--line); padding:18px 20px; backdrop-filter: blur(8px); }
     .catalog-header h1 { margin:0 0 6px; font-size:24px; }
     .catalog-header p { margin:0 0 14px; color:var(--muted); }
-    .controls { display:grid; grid-template-columns: minmax(240px, 1fr) 170px 170px 210px 170px 150px; gap:10px; max-width:1600px; }
+    .controls { display:grid; grid-template-columns: minmax(240px, 1fr) 180px 180px 210px 150px; gap:10px; max-width:1400px; }
     .controls input,.controls select,.controls button { padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:#11141c; color:var(--text); }
     .controls button { cursor:pointer; }
     .stats { margin-top:10px; color:var(--muted); font-size:14px; }
@@ -51,28 +51,6 @@
     .validation-card .chip { background:#3a2d1f; }
     .validation-note { color:#f4d49a; font-size:12px; margin-top:4px; }
 
-
-
-    .adult-toggle {
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:10px;
-      border:1px solid var(--line);
-      background:#11141c;
-      color:var(--text);
-      font-size:13px;
-      cursor:pointer;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .adult-toggle input {
-      width:16px;
-      height:16px;
-      accent-color:var(--accent);
-    }
 
     .request-link {
       display:inline-flex;
@@ -113,13 +91,9 @@
 <option value="chapters-asc">Ordenar: Menos capítulos</option>
 <option value="original">Orden original</option>
 </select>
-<label class="adult-toggle" title="Mostrar u ocultar contenido clasificado como Pornhwa">
-<input id="showAdultToggle" type="checkbox"/>
-<span>Mostrar +18</span>
-</label>
 <button id="resetBtn" type="button">Limpiar filtros</button>
 </div>
-<div class="stats"><span id="visibleCount">0</span> de <span id="totalCount">0</span> entradas visibles en catálogo principal. <span id="validationCount">0</span> cuadro(s) separado(s) por validar. <span id="adultHiddenText"><span id="adultHiddenCount">0</span> elemento(s) +18 oculto(s).</span></div><div class="quick-links" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><a href="#catalogGrid" style="color:var(--accent); font-size:14px;">Ver catálogo principal</a><a href="#porValidar" style="color:var(--accent); font-size:14px;">Ver cuadros por validar</a></div>
+<div class="stats"><span id="visibleCount">0</span> de <span id="totalCount">0</span> entradas visibles en catálogo principal. <span id="validationCount">0</span> cuadro(s) separado(s) por validar.</div><div class="quick-links" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"><a href="#catalogGrid" style="color:var(--accent); font-size:14px;">Ver catálogo principal</a><a href="#porValidar" style="color:var(--accent); font-size:14px;">Ver cuadros por validar</a></div>
 </header>
 <main class="catalog-grid" id="catalogGrid">
 
@@ -267,12 +241,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="existencia / existence" data-status="" data-type="manhwa">
+<article class="catalog-card" data-name="existencia / existence" data-status="" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_15@19-04-2025_09-08-02.jpg" target="_blank"><img alt="Existencia / Existence" class="cover" src="photos/photo_15@19-04-2025_09-08-02.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Existencia / Existence</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">(72/72)</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">72</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("Existencia")'>#Existencia</a><br/><br/>🔸Nombre: Existencia / Existence<br/>🔸Género: Acción, Aventura, Ciencia Ficción, Fantasía, Psicológico.<br/>🔸Autor: Gwang-Jin.<br/>🔸Artista: Kim Kyeong-Joon.<br/>🔸Capítulos: 72<br/>🔸Fansubs: Olympus Scanlation.<br/><br/>🔸Descripción: La historia nos lleva con Lee Jain, un ser que ha pasado por varias reencarnaciones, desde ser parte de una manada de hormigas hasta convertirse en un imponente dinosaurio, y que ha adquirido los poderes de todas esas formas de vida. En su última reencarnación, Lee Jain renace como ser humano con un poder sobrenatural. Con el tiempo, comprende que su propósito es acabar con la humanidad.</div>
@@ -475,12 +449,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="el chef centenario" data-status="finalizado" data-type="manhwa">
+<article class="catalog-card" data-name="el chef centenario" data-status="finalizado" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_45@19-04-2025_09-11-30.jpg" target="_blank"><img alt="El Chef Centenario" class="cover" src="photos/photo_45@19-04-2025_09-11-30.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>El Chef Centenario</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">70/70</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span><span class="chip chapters">70/70</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🍣 Nombre: El Chef Centenario<br/><br/>🍣 Capitulos: 70/70<br/>🍣 Genero: <a href="" onclick='return ShowHashtag("Drama")'>#Drama</a> <a href="" onclick='return ShowHashtag("Fantasia")'>#Fantasia</a> <a href="" onclick='return ShowHashtag("Recuerdos_de_la_vidal")'>#Recuerdos_de_la_vidal</a><br/>🍣 Estado: <a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a> <br/><br/>🍣 Sinopsis:<br/><br/>El mejor chef del mundo.  Primera, segunda, tercera...... Y la sexta vida. El tiempo combinado dedicado a la cocina es de más de 100 años. "Ya no puedo hacerlo más". Sólo hay una manera de evitar la regresión repetitiva sin fin. Esta vez lo lograré.<br/><br/><a href="" onclick='return ShowHashtag("El_Chef_Centenario")'>#El_Chef_Centenario</a></div>
@@ -553,12 +527,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="sistema de bomberos al rescate" data-status="" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_56@19-04-2025_09-12-47.jpg" target="_blank"><img alt="Sistema de bomberos al rescate" class="cover" src="photos/photo_56@19-04-2025_09-12-47.jpg"/></a></div>
+<article class="catalog-card" data-name="rescue system / sistema de bomberos al rescate" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_56@19-04-2025_09-12-47.jpg" target="_blank"><img alt="Rescue System / Sistema de bomberos al rescate" class="cover" src="photos/photo_56@19-04-2025_09-12-47.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Sistema de bomberos al rescate</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">73/73</span></div>
+<h2>Rescue System / Sistema de bomberos al rescate</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">73</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("Rescue_System")'>#Rescue_System</a><br/><br/>🔸Nombre: Rescue System / Sistema de bomberos al rescate<br/>🔸Género: Acción, Comedia, Drama, Fantasia, Realidad, Recuentos de la Vida.<br/>🔸Autor: Guyu, hezio95.<br/>🔸Artista: Sang-Ki Hong<br/>🔸Capítulos: 73<br/>🔸Fansubs: Hada Scans, Hermes Scan.<br/><br/>🔸Descripción: Kim Soohyuk, un veterano rescatista de Shinil-seo, murió aplastado durante una operación de rescate en un edificio que se derrumbaba. Soohyuk, que creía estar muerto, abrió los ojos en un incidente ocurrido hace 10 años. [Pudo salvar a dos personas que no pudo salvar en el pasado] Como recompensa, también recibió nuevas habilidades y fuerza. "Genial. A partir de ahora, ¡salvaré las vidas de aquellos que no pude salvar en el pasado!</div>
@@ -605,12 +579,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="the boxer" data-status="" data-type="manhwa">
+<article class="catalog-card" data-name="the boxer" data-status="" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_60@19-04-2025_09-13-11.jpg" target="_blank"><img alt="The Boxer" class="cover" src="photos/photo_60@19-04-2025_09-13-11.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>The Boxer</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">105</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">105</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("The_Boxer")'>#The_Boxer</a><br/><br/>🔸Nombre: The Boxer<br/>🔸Género: Deportes, Artes Marciales, Acción.<br/>🔸Autor: Jung Ji-Hoon<br/>🔸Artistas: Jung Ji-Hoon<br/>🔸Capítulos: 105<br/>🔸Fansubs: Olympus Scanlation, Sithrah, Koi no Yokan Fansub, Obsignature.<br/><br/>🔸Descripción: Tienes el talento en bruto. O eres el más débil. ¿Pero tienes el corazón? ¿Tienes lo que hay que tener? Veamos de qué estás hecho. La verdadera lucha comienza ahora.</div>
@@ -618,12 +592,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="the god of high school" data-status="" data-type="manhwa">
+<article class="catalog-card" data-name="the god of high school" data-status="" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_61@19-04-2025_09-13-33.jpg" target="_blank"><img alt="The God of High School" class="cover" src="photos/photo_61@19-04-2025_09-13-33.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>The God of High School</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">569</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">569</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("The_God_of_High_School")'>#The_God_of_High_School</a><br/><br/>🔸Nombre: The God of High School<br/>🔸Género: Acción, Aventura, Comedia, Fantasia, Supernatural, Artes Marciales. <br/>🔸Autor: Yong-Je Park<br/>🔸Artista: Yong-Je Park<br/>🔸Capítulos: 569<br/>🔸Fansubs: Hellstone no fansub, Mixam Scans, Lyxe Translation, Taurus scan<br/><br/>🔸Descripción: La historia trata sobre una organización que manda invitaciones a peleadores de todo el mundo a que vayan a una isla que está a punto de destruirse para competir en un torneo en donde el ganador podrá escoger lo que él quiera de premio. Mori Jin quien proclama ser el más fuerte de su escuela, además de que tiene una gran habilidad en el Tae Kwon Do, es invitado a dicho torneo para en verdad demostrar si es el más fuerte del mundo.<br/><br/>🔸<strong>El anime adapta hasta el capítulo 112</strong></div>
@@ -631,12 +605,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="sangre vengadora" data-status="" data-type="manhwa">
-<div class="cover-box"><a class="cover-link" href="photos/photo_62@19-04-2025_09-13-34.jpg" target="_blank"><img alt="Sangre Vengadora" class="cover" src="photos/photo_62@19-04-2025_09-13-34.jpg"/></a></div>
+<article class="catalog-card" data-name="unholy blood / sangre vengadora / white blood" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_62@19-04-2025_09-13-34.jpg" target="_blank"><img alt="Unholy Blood / Sangre Vengadora / White Blood" class="cover" src="photos/photo_62@19-04-2025_09-13-34.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Sangre Vengadora</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">93</span></div>
+<h2>Unholy Blood / Sangre Vengadora / White Blood</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">93</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🔸Nombre: Unholy Blood / Sangre Vengadora / White Blood<br/>🔸Género: Acción, Drama, Romance, Supernatural.<br/>🔸Autor: Li-Na Lim<br/>🔸Artista: Li-Na Lim<br/>🔸Capítulos: 93<br/>🔸Fansubs: <br/><br/>🔸Descripción: Cuando los vampiros destruyen su oportunidad de tener la vida normal que siempre quiso, Hayan utilizará su secreto más oscuro para liberar al mundo de los despiadados cazadores que lo controlan desde hace más de 10 años. Con la ayuda de la nueva promesa de las fuerzas policiales, Hayan protegerá a sus seres queridos, enfrentará a su pasado y obtendrá su venganza.<br/><br/><a href="" onclick='return ShowHashtag("Sangre_Vengadora")'>#Sangre_Vengadora</a><br/><a href="" onclick='return ShowHashtag("Unholy_Blood")'>#Unholy_Blood</a></div>
@@ -644,12 +618,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="¡vamos a comer! 🍖" data-status="finalizado" data-type="manhwa">
+<article class="catalog-card" data-name="¡vamos a comer! 🍖" data-status="finalizado" data-type="sin tipo">
 <div class="cover-box"><a class="cover-link" href="photos/photo_63@19-04-2025_09-13-34.jpg" target="_blank"><img alt="¡Vamos A Comer! 🍖" class="cover" src="photos/photo_63@19-04-2025_09-13-34.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>¡Vamos A Comer! 🍖</h2>
-<div class="chips"><span class="chip type">Manhwa</span><span class="chip status">Finalizado</span><span class="chip chapters">116/116</span></div>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip status">Finalizado</span><span class="chip chapters">116/116</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🍖 Nombre: ¡Vamos A Comer!<br/><br/>🍖 Género: <a href="" onclick='return ShowHashtag("Comedia")'>#Comedia</a> <a href="" onclick='return ShowHashtag("Fantasía")'>#Fantasía</a> <a href="" onclick='return ShowHashtag("Realidad_Virtual")'>#Realidad_Virtual</a><br/>🍖 Capitulos: 116/116<br/>🍖 Estado: <a href="" onclick='return ShowHashtag("Finalizado")'>#Finalizado</a> <br/><br/>🍖 Sinopsis: Mientras que el chef Lee Rim, que ha perdido el sentido del gusto, está frustrado. Busca experimentar de nuevo sus cinco sentidos en el juego de realidad virtual [Real] Vive aventuras, aunque el solo quiere cocinar, derrota jefes (que le parecen buenos ingredientes) y crece para desafiar su sueño de volver a ser un chef en la vida real.<br/><br/><a href="" onclick='return ShowHashtag("Vamos_A_Comer")'>#Vamos_A_Comer</a></div>
@@ -657,12 +631,12 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="yongbi el invencible" data-status="" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_69@19-04-2025_09-14-02.jpg" target="_blank"><img alt="Yongbi el invencible" class="cover" src="photos/photo_69@19-04-2025_09-14-02.jpg"/></a></div>
+<article class="catalog-card" data-name="yongbi the invincible / yongbi el invencible" data-status="" data-type="sin tipo">
+<div class="cover-box"><a class="cover-link" href="photos/photo_69@19-04-2025_09-14-02.jpg" target="_blank"><img alt="Yongbi the Invincible / Yongbi el invencible" class="cover" src="photos/photo_69@19-04-2025_09-14-02.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Yongbi el invencible</h2>
-<div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">149</span></div>
+<h2>Yongbi the Invincible / Yongbi el invencible</h2>
+<div class="chips"><span class="chip type">Sin tipo</span><span class="chip chapters">149</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info"><a href="" onclick='return ShowHashtag("Yongbi_the_Invincible")'>#Yongbi_the_Invincible</a><br/><br/>🔸Nombre: Yongbi the Invincible / Yongbi el invencible<br/>🔸Género: Acción, Aventura, Comedia, Fantasia, Historia, Artes Marciales.<br/>🔸Autor: Gi-Un Ryu<br/>🔸Artista: Jeong-Hu Mun<br/>🔸Capítulos: 149<br/>🔸Fansubs: Mugiwara no Fansub, One Man Translate.<br/><br/>🔸Descripción: Yongbi es un cazador de recompensas sin miedo ni reproche. Sobre todo, sin miedo, en realidad. A pesar de su avaricia y su inclinación por la bebida (por suerte compartida por su fiel caballo) y las mujeres, Yongbi sigue siendo un joven encantador. Y cuando un muchacho que llevaba un medallón, fuente de mucha envidia, se encuentra bajo la protección de los aventureros, los que cruzan su camino debe prepararse para lo peor!</div>
@@ -831,7 +805,7 @@
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
 <h2>Bleach</h2>
-<div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">686</span></div>
+<div class="chips"><span class="chip type">Manga</span><span class="chip chapters">686</span></div>
 <details>
 <summary>Ver información relacionada</summary>
 <div class="original-info">🉐<strong>Título:</strong> Bleach<br/>㊙️<strong>Etiquetas:</strong> <a href="" onclick='return ShowHashtag("Manga")'>#Manga</a> <a href="" onclick='return ShowHashtag("Bleach")'>#Bleach</a><strong><br/>✔️Géneros: </strong><a href="" onclick='return ShowHashtag("Acción")'>#Acción</a>, <a href="" onclick='return ShowHashtag("Aventura")'>#Aventura</a>, <a href="" onclick='return ShowHashtag("Sobrenatural")'>#Sobrenatural</a>, <a href="" onclick='return ShowHashtag("Shounen")'>#Shounen</a><br/>✔️<strong>Tomos:</strong> 74 + Extra <br/>✔️<strong>Capitulos:</strong> 686<br/>✔️<strong>Autor:</strong> Tite Kubo<br/>✔️<strong>Traducción: </strong>Soul Craft Fansub y no se quien mas<br/><br/>🀄️<strong>Sinopsis: </strong>Ichigo Kurosaki siempre ha sido capaz de ver fantasmas, pero esta habilidad no cambia su vida tanto como su encuentro cercano con Rukia Kuchiki, un Soul Reaper y miembro de la misteriosa Soul Society. Mientras lucha contra un Hollow, un espíritu maligno que se aprovecha de los humanos que muestran energía psíquica, Rukia intenta prestarle a Ichigo algunos de sus poderes para que pueda salvar a su familia; pero para su sorpresa, Ichigo absorbe hasta la última gota de su energía. Ahora que él mismo es un Segador de almas, Ichigo aprende rápidamente que el mundo en el que habita está lleno de espíritus peligrosos.<br/><br/><a href="" onclick='return ShowHashtag("Bleach")'>#Bleach</a></div>
@@ -891,11 +865,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="fire force" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_95@19-04-2025_09-18-16.jpg" target="_blank"><img alt="Fire Force" class="cover" src="photos/photo_95@19-04-2025_09-18-16.jpg"/></a></div>
+<article class="catalog-card" data-name="enen no shouboutai fire force - (炎炎ノ消防隊)" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_95@19-04-2025_09-18-16.jpg" target="_blank"><img alt="Enen no Shouboutai Fire Force - (炎炎ノ消防隊)" class="cover" src="photos/photo_95@19-04-2025_09-18-16.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Fire Force</h2>
+<h2>Enen no Shouboutai Fire Force - (炎炎ノ消防隊)</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">304</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -904,11 +878,11 @@
 </div>
 </article>
 
-<article class="catalog-card" data-name="dungeon meshi" data-status="finalizado" data-type="manga">
-<div class="cover-box"><a class="cover-link" href="photos/photo_97@19-04-2025_09-24-47.jpg" target="_blank"><img alt="Dungeon Meshi" class="cover" src="photos/photo_97@19-04-2025_09-24-47.jpg"/></a></div>
+<article class="catalog-card" data-name="dungeon meshi delicious in dungeon (ダンジョン飯)" data-status="finalizado" data-type="manga">
+<div class="cover-box"><a class="cover-link" href="photos/photo_97@19-04-2025_09-24-47.jpg" target="_blank"><img alt="Dungeon Meshi Delicious in Dungeon (ダンジョン飯)" class="cover" src="photos/photo_97@19-04-2025_09-24-47.jpg"/></a></div>
 <div class="card-content">
 <div class="card-top"><span class="item-num">Solicitar descarga</span></div>
-<h2>Dungeon Meshi</h2>
+<h2>Dungeon Meshi Delicious in Dungeon (ダンジョン飯)</h2>
 <div class="chips"><span class="chip type">Manga</span><span class="chip status">Finalizado</span><span class="chip chapters">97</span></div>
 <details>
 <summary>Ver información relacionada</summary>
@@ -3568,7 +3542,6 @@
     - Mantiene el boton de solicitud por WhatsApp.
   */
   const WHATSAPP_NUMBER = "525586006883";
-  const ADULT_TYPE_VALUE = "pornhwa";
 
   function normalizeText(value) {
     return (value || "")
@@ -3621,19 +3594,6 @@
 
   function getCardStatus(card) {
     return normalizeText(getCardStatusLabel(card) || "Sin estado") || "sin estado";
-  }
-
-  function isAdultCard(card) {
-    return getCardType(card) === ADULT_TYPE_VALUE;
-  }
-
-  function shouldShowAdultContent() {
-    const toggle = document.getElementById("showAdultToggle");
-    return Boolean(toggle && toggle.checked);
-  }
-
-  function getCatalogCardsForPublicView(cards) {
-    return shouldShowAdultContent() ? cards : cards.filter(card => !isAdultCard(card));
   }
 
   function getLabelFromValue(value, cards, field) {
@@ -3708,21 +3668,15 @@
     const typeFilter = document.getElementById("typeFilter");
     const statusFilter = document.getElementById("statusFilter");
     const cards = getMainCards();
-    const baseCards = getCatalogCardsForPublicView(cards);
     const query = normalizeText(searchBox ? searchBox.value : "");
-    let selectedType = typeFilter ? typeFilter.value : "";
-    let selectedStatus = statusFilter ? statusFilter.value : "";
+    const selectedType = typeFilter ? typeFilter.value : "";
+    const selectedStatus = statusFilter ? statusFilter.value : "";
 
-    if (!shouldShowAdultContent() && selectedType === ADULT_TYPE_VALUE) {
-      selectedType = "";
-      if (typeFilter) typeFilter.value = "";
-    }
+    const cardsForType = cards.filter(card => matchesSearch(card, query) && (!selectedStatus || getCardStatus(card) === selectedStatus));
+    const cardsForStatus = cards.filter(card => matchesSearch(card, query) && (!selectedType || getCardType(card) === selectedType));
 
-    const cardsForType = baseCards.filter(card => matchesSearch(card, query) && (!selectedStatus || getCardStatus(card) === selectedStatus));
-    const cardsForStatus = baseCards.filter(card => matchesSearch(card, query) && (!selectedType || getCardType(card) === selectedType));
-
-    updateSelectOptions(typeFilter, countBy(cardsForType, "type"), selectedType, "Todos los tipos", "type", baseCards);
-    updateSelectOptions(statusFilter, countBy(cardsForStatus, "status"), selectedStatus, "Todos los estados", "status", baseCards);
+    updateSelectOptions(typeFilter, countBy(cardsForType, "type"), selectedType, "Todos los tipos", "type", cards);
+    updateSelectOptions(statusFilter, countBy(cardsForStatus, "status"), selectedStatus, "Todos los estados", "status", cards);
   }
 
   function sortCatalog() {
@@ -3776,8 +3730,6 @@
     const visibleCount = document.getElementById("visibleCount");
     const totalCount = document.getElementById("totalCount");
     const validationCount = document.getElementById("validationCount");
-    const adultHiddenCount = document.getElementById("adultHiddenCount");
-    const adultHiddenText = document.getElementById("adultHiddenText");
 
     rebuildDynamicFilters();
     sortCatalog();
@@ -3785,24 +3737,18 @@
     const query = normalizeText(searchBox ? searchBox.value : "");
     const selectedType = typeFilter ? typeFilter.value : "";
     const selectedStatus = statusFilter ? statusFilter.value : "";
-    const showAdult = shouldShowAdultContent();
     const cards = getMainCards();
-    const hiddenAdultCards = cards.filter(card => isAdultCard(card)).length;
-    const publicTotal = showAdult ? cards.length : cards.length - hiddenAdultCards;
     let visible = 0;
 
     cards.forEach(card => {
-      const allowedByAdultToggle = showAdult || !isAdultCard(card);
-      const show = allowedByAdultToggle && matchesSearch(card, query) && matchesFilter(card, selectedType, selectedStatus);
+      const show = matchesSearch(card, query) && matchesFilter(card, selectedType, selectedStatus);
       card.style.display = show ? "" : "none";
       if (show) visible++;
     });
 
     if (visibleCount) visibleCount.textContent = visible;
-    if (totalCount) totalCount.textContent = publicTotal;
+    if (totalCount) totalCount.textContent = cards.length;
     if (validationCount) validationCount.textContent = getValidationCards().length;
-    if (adultHiddenCount) adultHiddenCount.textContent = showAdult ? 0 : hiddenAdultCards;
-    if (adultHiddenText) adultHiddenText.style.display = showAdult || hiddenAdultCards === 0 ? "none" : "inline";
   }
 
   function resetFilters() {
@@ -3810,13 +3756,11 @@
     const typeFilter = document.getElementById("typeFilter");
     const statusFilter = document.getElementById("statusFilter");
     const sortFilter = document.getElementById("sortFilter");
-    const showAdultToggle = document.getElementById("showAdultToggle");
 
     if (searchBox) searchBox.value = "";
     if (typeFilter) typeFilter.value = "";
     if (statusFilter) statusFilter.value = "";
     if (sortFilter) sortFilter.value = "name-asc";
-    if (showAdultToggle) showAdultToggle.checked = false;
     filterCatalog();
   }
 
@@ -3874,14 +3818,12 @@
     const typeFilter = document.getElementById("typeFilter");
     const statusFilter = document.getElementById("statusFilter");
     const sortFilter = document.getElementById("sortFilter");
-    const showAdultToggle = document.getElementById("showAdultToggle");
     const resetBtn = document.getElementById("resetBtn");
 
     if (searchBox) searchBox.addEventListener("input", filterCatalog);
     if (typeFilter) typeFilter.addEventListener("change", filterCatalog);
     if (statusFilter) statusFilter.addEventListener("change", filterCatalog);
     if (sortFilter) sortFilter.addEventListener("change", filterCatalog);
-    if (showAdultToggle) showAdultToggle.addEventListener("change", filterCatalog);
     if (resetBtn) resetBtn.addEventListener("click", resetFilters);
 
     initWhatsappRequestButtons();
